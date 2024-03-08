@@ -69,7 +69,12 @@
         </div>
 
         <!-- Submit Button -->
-        <Button type="submit" class="w-full rounded-2xl"> Login </Button>
+        <Button
+          type="submit"
+          class="w-full rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-semibold"
+        >
+          Login
+        </Button>
 
         <p class="text-sm text-gray-400 space-x-2 mt-2">
           Don't have an account?
