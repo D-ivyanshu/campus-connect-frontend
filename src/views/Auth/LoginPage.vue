@@ -12,11 +12,6 @@
         <!-- logo -->
         <router-link to="/">
           <img src="@/assets/logo-campus-connect.png" alt="" class="h-20" />
-
-          <!-- <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg" class="mb-5">
-            <path fill="#6366f1" d="M13.853 18.14 1 10.643 31 1l-.019.058z"></path>
-            <path fill="#a5b4fc" d="M13.853 18.14 30.981 1.058 21.357 31l-7.5-12.857z"></path>
-          </svg> -->
         </router-link>
         <h1 class="font-bold text-3xl mb-5">Login</h1>
         <h1 class="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
@@ -52,7 +47,7 @@
                 <FormControl>
                   <div class="relative w-full max-w-sm items-center">
                     <Input
-                      type="text"
+                      type="password"
                       placeholder="Password"
                       class="border-2 pl-10 py-5 w-full rounded-2xl outline-none text-[16px]"
                       v-bind="componentField"
@@ -69,12 +64,7 @@
         </div>
 
         <!-- Submit Button -->
-        <Button
-          type="submit"
-          class="w-full rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-semibold"
-        >
-          Login
-        </Button>
+        <Button type="submit" class="w-full rounded-2xl font-semibold"> Login </Button>
 
         <p class="text-sm text-gray-400 space-x-2 mt-2">
           Don't have an account?
@@ -90,7 +80,7 @@
 </template>
 
 <script setup>
-import { h } from 'vue'
+// import { h } from 'vue'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
@@ -101,9 +91,9 @@ import IconLock from '@/components/icons/IconLock.vue'
 import { Button } from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useToast } from '@/components/ui/toast/use-toast'
+// import { useToast } from '@/components/ui/toast/use-toast'
 
-const { toast } = useToast()
+// const { toast } = useToast()
 
 const formSchema = toTypedSchema(
   z.object({

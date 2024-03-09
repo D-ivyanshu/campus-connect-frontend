@@ -105,19 +105,15 @@
         <!-- Submit Button -->
         <Button
           type="submit"
-          class="w-full rounded-2xl bg-indigo-600 hover:bg-indigo-500 font-semibold"
+          class="w-full rounded-2xl font-semibold"
         >
-          Login
+          Register
         </Button>
 
-        <!-- <p class="text-sm text-gray-400 space-x-2 mt-2">
-          Don't have an account?
-          <span class="text-indigo-500 text-sm"><a href="/register">Register</a></span>
+        <p class="text-sm text-gray-400 space-x-2 mt-2">
+          Already have an account?
+          <span class="text-indigo-500 text-sm"><a href="/login">Login</a></span>
         </p>
-        <p class="text-sm text-gray-400">
-          Forgot Password?
-          <span class="text-indigo-500 text-sm"><a href="/forgotpassword">Reset Password</a></span>
-        </p> -->
       </form>
     </div>
     <!-- Image side -->
