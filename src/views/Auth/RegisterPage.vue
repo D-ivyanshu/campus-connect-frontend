@@ -103,12 +103,7 @@
         </div>
 
         <!-- Submit Button -->
-        <Button
-          type="submit"
-          class="w-full rounded-2xl font-semibold"
-        >
-          Register
-        </Button>
+        <Button type="submit" class="w-full rounded-2xl font-semibold"> Register </Button>
 
         <p class="text-sm text-gray-400 space-x-2 mt-2">
           Already have an account?
@@ -137,9 +132,21 @@ import IconUser from '@/components/icons/IconUser.vue'
 import { Button } from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-// import { useToast } from '@/components/ui/toast/use-toast'
+import { useToast } from '@/components/ui/toast/use-toast'
+import { onMounted } from 'vue'
+import { mapGetters, useStore } from 'vuex'
+import router from '@/router'
 
-// const { toast } = useToast()
+const store = useStore()
+const { toast } = useToast()
+
+const { isLoggedIn } = mapGetters('User', ['isLoggedIn'])
+
+onMounted(async () => {
+  if (isLoggedIn.value) {
+    router.push('/')
+  }
+})
 
 const formSchema = toTypedSchema(
   z
@@ -167,8 +174,29 @@ const { handleSubmit } = useForm({
   validationSchema: formSchema
 })
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values)
-  //TODO: ADD A TOAST HERE
+const onSubmit = handleSubmit(async (values) => {
+  try {
+    await store.dispatch('User/register', values)
+
+    toast({
+      title: 'Registered Successfully'
+    })
+
+    setTimeout(() => {
+      router.push('/')
+    }, 2000)
+  } catch (error) {
+    if (error.response?.status === 401) {
+      toast({
+        title: error.response.data.error,
+        variant: 'destructive'
+      })
+    } else {
+      toast({
+        title: 'Internal Server Error',
+        variant: 'destructive'
+      })
+    }
+  }
 })
 </script>

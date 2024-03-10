@@ -80,7 +80,6 @@
 </template>
 
 <script setup>
-// import { h } from 'vue'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
@@ -91,9 +90,14 @@ import IconLock from '@/components/icons/IconLock.vue'
 import { Button } from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-// import { useToast } from '@/components/ui/toast/use-toast'
+import { useToast } from '@/components/ui/toast/use-toast'
 
-// const { toast } = useToast()
+import { onMounted } from 'vue'
+import { useStore } from 'vuex'
+import router from '@/router'
+
+const store = useStore()
+const { toast } = useToast()
 
 const formSchema = toTypedSchema(
   z.object({
@@ -114,8 +118,35 @@ const { handleSubmit } = useForm({
   validationSchema: formSchema
 })
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values)
-  //TODO: ADD A TOAST HERE
+onMounted(async () => {
+  if (store.getters.isLoggedIn) {
+    router.push('/')
+  }
+})
+
+const onSubmit = handleSubmit(async (values) => {
+  try {
+    await store.dispatch('User/login', values)
+
+    toast({
+      title: 'Logged In Successfully'
+    })
+
+    setTimeout(() => {
+      router.push('/')
+    }, 2000)
+  } catch (error) {
+    if (error.response?.status === 401) {
+      toast({
+        title: error.response.data.error,
+        variant: 'destructive'
+      })
+    } else {
+      toast({
+        title: 'Internal Server Error',
+        variant: 'destructive'
+      })
+    }
+  }
 })
 </script>
