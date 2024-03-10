@@ -32,7 +32,23 @@
               <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
               <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
             </svg>
-            <span class="ml-3">Overview</span>
+            <Dialog class="sm:h-10 md:max-w-[425px] lg:max-w-2xl">
+              <DialogTrigger>
+                <span class="ml-3">Overview</span>
+              </DialogTrigger>
+              <DialogContent class="sm:max-w-[425px] lg:max-w-2xl">
+                <DialogHeader>
+                  <DialogTitle class="text-2xl">What is happening ?</DialogTitle>
+                  <DialogDescription>
+                    Make changes to your profile here. Click save when you're done.
+                  </DialogDescription>
+                </DialogHeader>
+                <AddPost />
+                <DialogFooter>
+                  <Button type="submit"> Save changes </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </a>
         </li>
         <li>
@@ -123,6 +139,17 @@
 <script setup>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from '@/components/ui/dialog'
+import AddPost from '../Posts/AddPost.vue'
+
 const store = useStore()
 
 const User = computed(() => store.state.User.user)

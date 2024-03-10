@@ -93,7 +93,7 @@ import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 import { onMounted } from 'vue'
-import { useStore } from 'vuex'
+import { mapGetters, useStore } from 'vuex'
 import router from '@/router'
 
 const store = useStore()
@@ -118,8 +118,12 @@ const { handleSubmit } = useForm({
   validationSchema: formSchema
 })
 
+const { isLoggedIn } = mapGetters('User', ['isLoggedIn'])
+
+console.log(isLoggedIn.value)
+
 onMounted(async () => {
-  if (store.getters.isLoggedIn) {
+  if (isLoggedIn.value) {
     router.push('/')
   }
 })
@@ -128,6 +132,7 @@ const onSubmit = handleSubmit(async (values) => {
   try {
     await store.dispatch('User/login', values)
 
+    // TODO: correct these toasts.
     toast({
       title: 'Logged In Successfully'
     })

@@ -20,7 +20,7 @@
 
         <!-- POSTS -->
         <div v-for="post in posts" :key="post">
-          <SocialPost :post="post"/>
+          <SocialPost :post="post" />
         </div>
       </div>
     </main>
@@ -34,7 +34,7 @@ import SideBar from '@/components/layout/SideBar.vue'
 import RightSideBar from '@/components/layout/RightSideBar.vue'
 import SocialPost from '@/components/Posts/SocialPost.vue'
 
-import axios from 'axios'
+import axios from '@/api.js'
 const posts = ref('')
 
 onMounted(async () => {

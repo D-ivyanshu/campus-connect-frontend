@@ -5,13 +5,14 @@ import store from '@/stores/index.js'
 axios.interceptors.request.use(
   function (config) {
     // Get the token from Vuex store
-    const token = store.getters.Token
+    const token = store.getters['User/Token']
 
     // If token exists, add it to the Authorization header
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
     }
 
+    console.log(config)
     return config
   },
   function (error) {

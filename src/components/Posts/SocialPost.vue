@@ -48,11 +48,7 @@
         </div>
       </div>
       <!-- Message -->
-      <div class="mb-4">
-        <p class="text-gray-800">
-          {{ props?.post.data.attributes.body }}
-        </p>
-      </div>
+      <div class="mb-4 prose" v-html="props?.post.data.attributes.body"></div>
       <!-- Image -->
       <!-- <div class="mb-4">
         <img src="@/assets/123.jpg" alt="Post Image" class="w-full object-fit rounded-md" />
