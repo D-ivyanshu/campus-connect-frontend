@@ -133,14 +133,14 @@ import { Button } from '@/components/ui/button'
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/toast/use-toast'
-import { onMounted } from 'vue'
-import { mapGetters, useStore } from 'vuex'
+import { computed, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import router from '@/router'
 
 const store = useStore()
 const { toast } = useToast()
 
-const { isLoggedIn } = mapGetters('User', ['isLoggedIn'])
+const isLoggedIn = computed(() => store.getters['User/isLoggedIn']);
 
 onMounted(async () => {
   if (isLoggedIn.value) {

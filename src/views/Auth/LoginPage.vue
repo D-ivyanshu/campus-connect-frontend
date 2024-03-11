@@ -92,7 +92,7 @@ import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/f
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/toast/use-toast'
 
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { mapGetters, useStore } from 'vuex'
 import router from '@/router'
 
@@ -118,8 +118,7 @@ const { handleSubmit } = useForm({
   validationSchema: formSchema
 })
 
-const { isLoggedIn } = mapGetters('User', ['isLoggedIn'])
-
+const isLoggedIn = computed(() => store.getters['User/isLoggedIn']);
 console.log(isLoggedIn.value)
 
 onMounted(async () => {

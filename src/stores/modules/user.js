@@ -61,13 +61,13 @@ const UserModule = {
     }
   },
   getters: {
-    isLoggedIn(state) {
+    isLoggedIn: (state) => {
       return state.user !== null
     },
-    User(state) {
+    User: (state) => {
       return state.user
     },
-    Token(state) {
+    Token: (state) => {
       return state.token
     }
   }
