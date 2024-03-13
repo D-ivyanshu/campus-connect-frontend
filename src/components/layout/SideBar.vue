@@ -44,9 +44,6 @@
                   </DialogDescription>
                 </DialogHeader>
                 <AddPost />
-                <DialogFooter>
-                  <Button type="submit"> Save changes </Button>
-                </DialogFooter>
               </DialogContent>
             </Dialog>
           </a>

@@ -17,9 +17,34 @@
     </div>
 
     <!-- Submit Button -->
-    <div class="flex bg-red-900 justify-between m-2">
-      <div>1</div>
-      <Button type="submit" class="rounded-2xl font-semibold right-0"> Submit Post </Button>
+    <div class="flex justify-between m-2 items-center">
+      <div class="flex space-x-8">
+        <div>2</div>
+        <div>2</div>
+      </div>
+
+      <Button
+        type="submit"
+        class="bg-indigo-600 hover:bg-indigo-500 rounded-2xl font-semibold right-0 flex items-center"
+      >
+        <div>
+          <svg
+            class="mr-1"
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </div>
+        Submit Post
+      </Button>
     </div>
   </form>
 </template>
@@ -30,9 +55,14 @@ import { ref } from 'vue'
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
-
+import Button from '@/components/ui/button/Button.vue'
 import MyEditor from '@/components/Posts/MyEditor.vue'
+import { useToast } from '@/components/ui/toast/use-toast'
+import axios from '@/api.js'
 const content = ref('')
+import router from '@/router'
+
+const { toast } = useToast()
 
 const formSchema = toTypedSchema(
   z.object({
@@ -45,7 +75,28 @@ const { handleSubmit } = useForm({
 })
 
 const onSubmit = handleSubmit(async (values) => {
-  console.log(values)
+  try {
+    axios.post('/api/posts', values)
+    toast({
+      title: 'Logged In Successfully'
+    })
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000)
+  } catch (error) {
+    if (error.response?.status === 401) {
+      toast({
+        title: error.response.data.error,
+        variant: 'destructive'
+      })
+    } else {
+      toast({
+        title: 'Internal Server Error',
+        variant: 'destructive'
+      })
+    }
+  }
 })
 
 console.log(content)

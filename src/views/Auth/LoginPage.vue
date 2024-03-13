@@ -93,7 +93,7 @@ import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/toast/use-toast'
 
 import { computed, onMounted } from 'vue'
-import { mapGetters, useStore } from 'vuex'
+import { useStore } from 'vuex'
 import router from '@/router'
 
 const store = useStore()

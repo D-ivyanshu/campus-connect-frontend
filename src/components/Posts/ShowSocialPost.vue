@@ -7,9 +7,9 @@
           <img src="@/assets/avatar/avatar3.jpg" class="rounded-full w-14 h-14" />
           <div>
             <p class="text-gray-800 font-semibold">
-              {{ props?.post.data.attributes.posted_by.data.attributes.name }}
+              {{ post?.data.attributes.posted_by.data.attributes.name }}
             </p>
-            <p class="text-gray-500 text-sm">Posted {{ props?.post.data.attributes.posted_at }}</p>
+            <p class="text-gray-500 text-sm">Posted {{ post?.data.attributes.posted_at }}</p>
           </div>
         </div>
         <div class="text-gray-500 cursor-pointer">
@@ -48,14 +48,12 @@
         </div>
       </div>
 
-      <router-link :to="'/posts/' + post?.data.post_id">
-        <!-- Message -->
-        <div class="mb-4 prose" v-html="post?.data.attributes.body"></div>
-      </router-link>
+      <!-- Message -->
+      <div class="mb-4 prose" v-html="post?.data.attributes.body"></div>
       <!-- Image -->
       <!-- <div class="mb-4">
-        <img src="@/assets/123.jpg" alt="Post Image" class="w-full object-fit rounded-md" />
-      </div> -->
+          <img src="@/assets/123.jpg" alt="Post Image" class="w-full object-fit rounded-md" />
+        </div> -->
       <!-- Like and Comment Section -->
       <div class="flex items-center justify-between text-gray-500">
         <div class="flex items-center space-x-2">
@@ -71,9 +69,7 @@
                 fill="gray"
               />
             </svg>
-            <router-link :to="'/posts/' + post?.data.post_id">
-              <span>42 Likes</span>
-            </router-link>
+            <span>42 Likes</span>
           </button>
         </div>
         <button
@@ -96,13 +92,38 @@
               ></path>
             </g>
           </svg>
-          <router-link :to="'/posts/' + post?.data.post_id">
-            <span>{{ post?.data.attributes.comments.comment_count }} Comment</span>
-          </router-link>
+          <span>{{ post?.data.attributes.comments.comment_count }} Comment</span>
         </button>
       </div>
     </div>
   </div>
+  <section class="bg-white dark:bg-gray-900 py-5 lg:py-5 antialiased">
+    <div class="max-w-2xl mx-auto px-4">
+      <!-- Add a comment -->
+      <form class="mb-6">
+        <div class="flex justify-between space-x-2">
+          <div
+            class="flex-grow py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border-2 border-gray-300 dark:bg-gray-800 dark:border-gray-700"
+          >
+            <label for="comment" class="sr-only">Your comment</label>
+            <textarea
+              id="comment"
+              rows="1"
+              class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+              placeholder="Write a comment..."
+              required
+            ></textarea>
+          </div>
+          <Button type="submit" class="rounded-xl font-semibold"> Post </Button>
+        </div>
+      </form>
+      <!-- Comments -->
+      <div v-for="comment in post.data.attributes.comments.data" :key="comment">
+        <PostComment :comment="comment" />
+        <hr class="mb-3" />
+      </div>
+    </div>
+  </section>
 </template>
 
 <script setup>
@@ -115,8 +136,12 @@ import {
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDelete from '@/components/icons/IconDelete.vue'
 import { ref } from 'vue'
+import { Button } from '@/components/ui/button'
+import PostComment from '@/components/Posts/PostComment.vue'
 
 const post = ref(null)
 const props = defineProps(['post'])
 post.value = props.post
 </script>
+
+//TODO:

@@ -3,6 +3,7 @@ import LoginPage from '@/views/Auth/LoginPage.vue'
 import RegisterPage from '@/views/Auth/RegisterPage.vue'
 import HomePage from '@/views/HomePage.vue'
 import AddPost from '@/components/Posts/AddPost.vue'
+import ShowPost from '@/components/Posts/ShowPost.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/add',
       name: 'add-post',
       component: AddPost
+    },
+    {
+      path: '/posts/:id',
+      name: 'show-post',
+      component: ShowPost
     }
   ]
 })
