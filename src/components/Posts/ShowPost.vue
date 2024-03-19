@@ -28,23 +28,24 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import SideBar from '@/components/layout/SideBar.vue'
 import RightSideBar from '@/components/layout/RightSideBar.vue'
 import { useRoute } from 'vue-router'
 import ShowSocialPost from '@/components/Posts/ShowSocialPost.vue'
-
-import axios from '@/api.js'
+import { useStore } from 'vuex'
 const post = ref('')
 const route = useRoute()
+const store = useStore()
 
 onMounted(async () => {
   try {
     console.log(route.params.id)
-    const res = await axios.get(`/api/posts/${route.params.id}`)
-    console.log(res.data)
-    post.value = res.data
+    const res = computed(() => store.getters['Post/postById'](route.params.id))
+    // const res = await axios.get(`/api/posts/${route.params.id}`)
+    console.log('post', res?.value.data)
+    post.value = res?.value.data
   } catch (error) {
     console.log(error)
   }

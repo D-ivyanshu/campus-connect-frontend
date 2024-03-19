@@ -100,12 +100,11 @@
   <section class="bg-white dark:bg-gray-900 py-5 lg:py-5 antialiased">
     <div class="max-w-2xl mx-auto px-4">
       <!-- Add a comment -->
-      <form class="mb-6">
+      <!-- <form class="mb-6">
         <div class="flex justify-between space-x-2">
           <div
             class="flex-grow py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border-2 border-gray-300 dark:bg-gray-800 dark:border-gray-700"
           >
-            <label for="comment" class="sr-only">Your comment</label>
             <textarea
               id="comment"
               rows="1"
@@ -116,12 +115,37 @@
           </div>
           <Button type="submit" class="rounded-xl font-semibold"> Post </Button>
         </div>
+      </form> -->
+
+      <form @submit.prevent="onSubmit">
+        <div class="flex justify-between space-x-2">
+          <div
+            class="flex-grow py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border-2 border-gray-300 dark:bg-gray-800 dark:border-gray-700"
+          >
+            <FormField name="comment">
+              <FormItem>
+                <FormControl>
+                  <input
+                    class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                    placeholder="Write a comment..."
+                    v-model="commentValue"
+                  />
+                </FormControl>
+              </FormItem>
+            </FormField>
+          </div>
+
+          <Button type="submit" class="rounded-xl font-semibold"> Post </Button>
+        </div>
       </form>
+
       <!-- Comments -->
-      <div v-for="comment in post.data.attributes.comments.data" :key="comment">
-        <PostComment :comment="comment" />
-        <hr class="mb-3" />
-      </div>
+      <span v-if="post?.data.attributes.comments">
+        <div v-for="comment in post?.data.attributes.comments.data" :key="comment">
+          <PostComment :comment="comment" />
+          <hr class="mb-3" />
+        </div>
+      </span>
     </div>
   </section>
 </template>
@@ -135,13 +159,41 @@ import {
 } from '@/components/ui/dropdown-menu'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDelete from '@/components/icons/IconDelete.vue'
-import { ref } from 'vue'
+import { FormControl, FormField, FormItem } from '@/components/ui/form'
+import { ref, computed } from 'vue'
 import { Button } from '@/components/ui/button'
 import PostComment from '@/components/Posts/PostComment.vue'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 
-const post = ref(null)
-const props = defineProps(['post'])
-post.value = props.post
+const store = useStore()
+const route = useRoute()
+
+// const comments = ref('')
+const commentValue = ref('')
+// const postInfo = ref(null)
+// const props = defineProps(['post'])
+// postInfo.value = props.post
+// comments.value = postInfo?.value?.data?.attributes.comments.data
+
+console.log(route.params.id)
+const post = computed(() => store.getters['Post/postById'](route.params.id))
+console.log(post.value)
+
+const onSubmit = async () => {
+  try {
+    await store.dispatch('Post/commentPost', {
+      postId: post.value.data.post_id,
+      commentData: commentValue.value
+    })
+
+    // const res = await axios.post('/api/posts/' + postInfo.value.data.post_id + '/comment', {
+    //   body: commentValue.value
+    // })
+    // comments.value = res?.data.data
+    commentValue.value = ''
+  } catch (error) {
+    console.log(error)
+  }
+}
 </script>
-
-//TODO:

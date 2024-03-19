@@ -7,9 +7,9 @@
           <img src="@/assets/avatar/avatar3.jpg" class="rounded-full w-14 h-14" />
           <div>
             <p class="text-gray-800 font-semibold">
-              {{ props?.post.data.attributes.posted_by.data.attributes.name }}
+              {{ postInfo?.data?.attributes.posted_by.data.attributes.name }}
             </p>
-            <p class="text-gray-500 text-sm">Posted {{ props?.post.data.attributes.posted_at }}</p>
+            <p class="text-gray-500 text-sm">Posted {{ postInfo?.data?.attributes.posted_at }}</p>
           </div>
         </div>
         <div class="text-gray-500 cursor-pointer">
@@ -48,9 +48,9 @@
         </div>
       </div>
 
-      <router-link :to="'/posts/' + post?.data.post_id">
+      <router-link :to="'/posts/' + postInfo?.data?.post_id">
         <!-- Message -->
-        <div class="mb-4 prose" v-html="post?.data.attributes.body"></div>
+        <div class="mb-4 prose" v-html="postInfo?.data?.attributes.body"></div>
       </router-link>
       <!-- Image -->
       <!-- <div class="mb-4">
@@ -71,7 +71,7 @@
                 fill="gray"
               />
             </svg>
-            <router-link :to="'/posts/' + post?.data.post_id">
+            <router-link :to="'/posts/' + postInfo?.data?.post_id">
               <span>42 Likes</span>
             </router-link>
           </button>
@@ -96,8 +96,8 @@
               ></path>
             </g>
           </svg>
-          <router-link :to="'/posts/' + post?.data.post_id">
-            <span>{{ post?.data.attributes.comments.comment_count }} Comment</span>
+          <router-link :to="'/posts/' + postInfo?.data?.post_id">
+            <span>{{ postInfo?.data?.attributes.comments.comment_count }} Comment</span>
           </router-link>
         </button>
       </div>
@@ -116,7 +116,8 @@ import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDelete from '@/components/icons/IconDelete.vue'
 import { ref } from 'vue'
 
-const post = ref(null)
+const postInfo = ref('')
 const props = defineProps(['post'])
-post.value = props.post
+postInfo.value = props.post
+console.log(postInfo.value)
 </script>

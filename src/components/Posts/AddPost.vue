@@ -58,11 +58,9 @@ import * as z from 'zod'
 import Button from '@/components/ui/button/Button.vue'
 import MyEditor from '@/components/Posts/MyEditor.vue'
 import { useToast } from '@/components/ui/toast/use-toast'
-import axios from '@/api.js'
 const content = ref('')
-import router from '@/router'
-
 const { toast } = useToast()
+import { useStore } from 'vuex'
 
 const formSchema = toTypedSchema(
   z.object({
@@ -73,18 +71,20 @@ const formSchema = toTypedSchema(
 const { handleSubmit } = useForm({
   validationSchema: formSchema
 })
+const store = useStore()
 
 const onSubmit = handleSubmit(async (values) => {
   try {
-    axios.post('/api/posts', values)
+    await store.dispatch('Post/addPost', values)
     toast({
-      title: 'Logged In Successfully'
+      title: 'Post added successfully'
     })
 
     setTimeout(() => {
-      window.location.reload();
-    }, 2000)
+      window.location.reload()
+    }, 500)
   } catch (error) {
+    console.log(error)
     if (error.response?.status === 401) {
       toast({
         title: error.response.data.error,

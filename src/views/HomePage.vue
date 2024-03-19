@@ -19,28 +19,30 @@
         </div>
 
         <!-- POSTS -->
-        <div v-for="post in posts" :key="post">
-          <SocialPost :post="post" />
-        </div>
+        <!-- <div v-for="(post, postKey) in posts" :key="post">
+          <SocialPost :post="post" :postKey="postKey" />
+        </div> -->
+        <!-- {{ posts }} -->
+        <SocialPost v-for="(post, postKey) in posts" :post="post" :key="post" :postKey="postKey" />
       </div>
     </main>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import SideBar from '@/components/layout/SideBar.vue'
 import RightSideBar from '@/components/layout/RightSideBar.vue'
-import SocialPost from '@/components/Posts/SocialPost.vue'
+import SocialPost from '@/components/Posts/PostCard.vue'
+import { useStore } from 'vuex'
 
-import axios from '@/api.js'
-const posts = ref('')
+const store = useStore()
+const posts = computed(() => store.getters['Post/posts'])
 
 onMounted(async () => {
   try {
-    const res = await axios.get('/api/posts')
-    posts.value = res.data.data
+    await store.dispatch('Post/fetchPosts')
   } catch (error) {
     console.log(error)
   }

@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import UserModule from '@/stores/modules/user'
+import PostModule from '@/stores/modules/post'
 
 import VuexPersistence from 'vuex-persist'
 
@@ -9,7 +10,8 @@ const vuexLocal = new VuexPersistence({
 
 const store = createStore({
   modules: {
-    User: UserModule
+    User: UserModule,
+    Post: PostModule
   },
   plugins: [vuexLocal.plugin]
 })
