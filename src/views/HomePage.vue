@@ -5,7 +5,7 @@
     <RightSideBar />
 
     <!-- main post section -->
-    <main class="p-10 pt-0 md:ml-64 md:mr-64 h-auto mt-16 rounded-lg overflow-y-auto">
+    <main class="p-2 pt-0 md:ml-64 md:mr-64 h-auto mt-16 rounded-lg overflow-y-auto">
       <div>
         <div class="bg-white mb-5 flex justify-between">
           <div class="text-xl font-semibold text-slate-700">Feeds</div>

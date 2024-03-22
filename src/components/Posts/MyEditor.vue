@@ -100,7 +100,7 @@
         <RedoIcon title="Redo" />
       </button>
     </section>
-    <EditorContent :editor="editor" />
+    <EditorContent :editor="editor"/>
   </div>
 </template>
 

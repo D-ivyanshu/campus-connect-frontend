@@ -21,7 +21,7 @@
         <!-- Three-dot menu icon -->
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <button class="hover:bg-gray-50 rounded-full p-1">
+            <button class="hover:bg-gray-50 rounded-full p-1" type="button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -44,7 +44,7 @@
               <IconEdit class="text-green-500 mr-5" />
               <span>Edit</span>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem @click="deleteComment">
               <IconDelete class="text-red-500 mr-5" />
               <span>Delete</span>
             </DropdownMenuItem>
@@ -104,8 +104,22 @@ import {
 } from '@/components/ui/dropdown-menu'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDelete from '@/components/icons/IconDelete.vue'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
+
 const commentValue = ref(null)
 const props = defineProps(['comment'])
 commentValue.value = props.comment
+
+const route = useRoute()
+const store = useStore()
+console.log(commentValue.value.data.comment_id)
+
+const deleteComment = async () => {
+  await store.dispatch('Post/removeComment', {
+    postId: route.params.id,
+    commentId: commentValue.value.data.comment_id
+  })
+}
 </script>

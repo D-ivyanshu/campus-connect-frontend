@@ -43,7 +43,6 @@ onMounted(async () => {
   try {
     console.log(route.params.id)
     const res = computed(() => store.getters['Post/postById'](route.params.id))
-    // const res = await axios.get(`/api/posts/${route.params.id}`)
     console.log('post', res?.value.data)
     post.value = res?.value.data
   } catch (error) {

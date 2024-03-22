@@ -4,52 +4,104 @@
       <!-- User Info with Three-Dot Menu -->
       <div class="flex items-center justify-between mb-4 w-full">
         <div class="flex items-center space-x-2">
-          <img src="@/assets/avatar/avatar3.jpg" class="rounded-full w-14 h-14" />
+          <img src="@/assets/avatar/avatar3.jpg" class="rounded-full w-10 h-10" />
           <div>
             <p class="text-gray-800 font-semibold">
               {{ post?.data.attributes.posted_by.data.attributes.name }}
             </p>
-            <p class="text-gray-500 text-sm">Posted {{ post?.data.attributes.posted_at }}</p>
+            <p class="text-gray-600 text-[12px]">Posted {{ post?.data.attributes.posted_at }}</p>
           </div>
         </div>
         <div class="text-gray-500 cursor-pointer">
           <!-- Three-dot menu icon -->
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              <button class="hover:bg-gray-50 rounded-full p-1">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+          <AlertDialog>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <button class="hover:bg-gray-50 rounded-full p-1">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="7" r="1" />
+                    <circle cx="12" cy="12" r="1" />
+                    <circle cx="12" cy="17" r="1" />
+                  </svg>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent class="left-0">
+                <DropdownMenuItem @click="editPost">
+                  <IconEdit class="text-green-500 mr-5" />
+                  <span>Edit</span>
+                </DropdownMenuItem>
+                <AlertDialogTrigger class="w-full">
+                  <DropdownMenuItem>
+                    <IconDelete class="text-red-500 mr-5" />
+                    <span>Delete</span>
+                  </DropdownMenuItem>
+                </AlertDialogTrigger>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  <div class="sm:flex sm:items-start">
+                    <div
+                      class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
+                    >
+                      <svg
+                        class="h-7 w-7 text-red-600"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                        />
+                      </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                      <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">
+                        Remove Post
+                      </h3>
+                      <div class="mt-2">
+                        <p class="text-sm text-gray-500">
+                          Are you sure you want to remove your post? This action cannot be undone.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </AlertDialogTitle>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  @click="deletePost"
+                  class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                  >Continue</AlertDialogAction
                 >
-                  <circle cx="12" cy="7" r="1" />
-                  <circle cx="12" cy="12" r="1" />
-                  <circle cx="12" cy="17" r="1" />
-                </svg>
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent class="left-0">
-              <DropdownMenuItem>
-                <IconEdit class="text-green-500 mr-5" />
-                <span>Edit</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <IconDelete class="text-red-500 mr-5" />
-                <span>Delete</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
 
       <!-- Message -->
-      <div class="mb-4 prose" v-html="post?.data.attributes.body"></div>
+      <div v-if="!edit" class="mb-4 prose" v-html="post?.data.attributes.body"></div>
+      <span v-if="edit">
+        <EditPost :defaultValue="post?.data" @edit-cancel="editPost" @edit-completed="editPost" />
+      </span>
+
       <!-- Image -->
       <!-- <div class="mb-4">
           <img src="@/assets/123.jpg" alt="Post Image" class="w-full object-fit rounded-md" />
@@ -99,24 +151,6 @@
   </div>
   <section class="bg-white dark:bg-gray-900 py-5 lg:py-5 antialiased">
     <div class="max-w-2xl mx-auto px-4">
-      <!-- Add a comment -->
-      <!-- <form class="mb-6">
-        <div class="flex justify-between space-x-2">
-          <div
-            class="flex-grow py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border-2 border-gray-300 dark:bg-gray-800 dark:border-gray-700"
-          >
-            <textarea
-              id="comment"
-              rows="1"
-              class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-              placeholder="Write a comment..."
-              required
-            ></textarea>
-          </div>
-          <Button type="submit" class="rounded-xl font-semibold"> Post </Button>
-        </div>
-      </form> -->
-
       <form @submit.prevent="onSubmit">
         <div class="flex justify-between space-x-2">
           <div
@@ -157,40 +191,59 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
+import EditPost from '@/components/Posts/EditPost.vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDelete from '@/components/icons/IconDelete.vue'
 import { FormControl, FormField, FormItem } from '@/components/ui/form'
 import { ref, computed } from 'vue'
+import router from '@/router'
 import { Button } from '@/components/ui/button'
 import PostComment from '@/components/Posts/PostComment.vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
+import { useToast } from '@/components/ui/toast/use-toast'
 
 const store = useStore()
 const route = useRoute()
+const { toast } = useToast()
 
-// const comments = ref('')
 const commentValue = ref('')
-// const postInfo = ref(null)
-// const props = defineProps(['post'])
-// postInfo.value = props.post
-// comments.value = postInfo?.value?.data?.attributes.comments.data
-
-console.log(route.params.id)
+const edit = ref(false)
 const post = computed(() => store.getters['Post/postById'](route.params.id))
-console.log(post.value)
+
+const editPost = async () => {
+  edit.value = !edit.value
+}
+
+const deletePost = async () => {
+  await store.dispatch('Post/removePost', {
+    postId: post.value.data.post_id
+  })
+  router.push('/')
+  toast({
+    title: 'Failed to create project',
+    // class: 'bg-red-200', add colors and all for designs
+    duration: 1000
+  })
+}
 
 const onSubmit = async () => {
   try {
-    await store.dispatch('Post/commentPost', {
+    await store.dispatch('Post/addComment', {
       postId: post.value.data.post_id,
       commentData: commentValue.value
     })
-
-    // const res = await axios.post('/api/posts/' + postInfo.value.data.post_id + '/comment', {
-    //   body: commentValue.value
-    // })
-    // comments.value = res?.data.data
     commentValue.value = ''
   } catch (error) {
     console.log(error)
