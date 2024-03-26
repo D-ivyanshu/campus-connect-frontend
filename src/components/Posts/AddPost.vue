@@ -18,10 +18,22 @@
 
     <!-- Submit Button -->
     <div class="flex justify-between m-2 items-center">
-      <div class="flex space-x-8">
-        <div>2</div>
-        <div>2</div>
+      <div class="flex space-x-3">
+        <div class="flex items-center rounded-full bg-gray-100 pl-3.5 pr-3.5 p-2 hover:bg-gray-200">
+          <label for="upload" class="cursor-pointer">
+            <IconGallery class="text-green-500" />
+            <h1 class="text-slate-500">Image</h1>
+          </label>
+          <input id="upload" type="file" class="hidden" />
+        </div>
+        <div
+          class="flex items-center rounded-full bg-gray-100 p-1.5 pl-3.5 pr-3.5 hover:bg-gray-200"
+        >
+          <IconVideo class="text-red-500" />
+          <h1 class="text-slate-500">Video</h1>
+        </div>
       </div>
+      <div></div>
 
       <Button
         type="submit"
@@ -53,6 +65,8 @@
 import { useForm } from 'vee-validate'
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { toTypedSchema } from '@vee-validate/zod'
+import IconGallery from '@/components/icons/IconGallery.vue'
+import IconVideo from '@/components/icons/IconVideo.vue'
 import * as z from 'zod'
 import Button from '@/components/ui/button/Button.vue'
 import MyEditor from '@/components/Posts/MyEditor.vue'

@@ -1,5 +1,5 @@
 <template>
-  <div class="border-2 border-dashed rounded-2xl border-gray-300 dark:border-gray-600 mb-4">
+  <div class="border rounded-2xl border-gray-100 shadow dark:border-gray-600 mb-4">
     <div class="hover:bg-gray-50 bg-white p-8 rounded-2xl shadow-md w-full">
       <!-- User Info with Three-Dot Menu -->
       <div class="flex items-center justify-between mb-4 w-full">
@@ -111,7 +111,7 @@
       </span>
       <!-- Image -->
       <!-- <div class="mb-4">
-        <img src="@/assets/123.jpg" alt="Post Image" class="w-full object-fit rounded-md" />
+        <img src="@/assets/123.jpg" alt="Post Image" class="h-22 w-full object-fit rounded-md" />
       </div> -->
       <!-- Like and Comment Section -->
       <div class="flex items-center justify-between text-gray-500">

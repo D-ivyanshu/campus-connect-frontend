@@ -64,7 +64,6 @@ import * as z from 'zod'
 import Button from '@/components/ui/button/Button.vue'
 import MyEditor from '@/components/Posts/MyEditor.vue'
 import { useToast } from '@/components/ui/toast/use-toast'
-import { defineEmits } from 'vue'
 
 const { toast } = useToast()
 import { useStore } from 'vuex'

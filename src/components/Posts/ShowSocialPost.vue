@@ -169,7 +169,7 @@
             </FormField>
           </div>
 
-          <Button type="submit" class="rounded-xl font-semibold"> Post </Button>
+          <Button type="submit" class="rounded-lg bg-slate-800 hover:bg-slate-700">Post </Button>
         </div>
       </form>
 

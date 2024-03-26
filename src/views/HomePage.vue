@@ -18,12 +18,15 @@
           </div>
         </div>
 
+        <!-- Add a post -->
+        <ShareSomething />
+
         <!-- POSTS -->
         <!-- <div v-for="(post, postKey) in posts" :key="post">
           <SocialPost :post="post" :postKey="postKey" />
         </div> -->
         <!-- {{ posts }} -->
-        <SocialPost v-for="(post, postKey) in posts" :post="post" :key="post" :postKey="postKey" />
+        <PostCard v-for="post in posts" :post="post" :key="post" />
       </div>
     </main>
   </div>
@@ -34,7 +37,9 @@ import { computed, onMounted } from 'vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import SideBar from '@/components/layout/SideBar.vue'
 import RightSideBar from '@/components/layout/RightSideBar.vue'
-import SocialPost from '@/components/Posts/PostCard.vue'
+import PostCard from '@/components/Posts/PostCard.vue'
+import ShareSomething from '@/components/Posts/ShareSomething.vue'
+
 import { useStore } from 'vuex'
 
 const store = useStore()

@@ -10,12 +10,14 @@
       <form class="flex flex-col py-10 ml-1" @submit="onSubmit">
         <!-- TODO: FIX THIS LOGO HERE -->
         <!-- logo -->
-        <router-link to="/">
-          <img src="@/assets/logo-campus-connect.png" alt="" class="h-20" />
+        <router-link to="/" class="flex mb-7">
+          <!-- <img src="@/assets/campus connect logo.png" alt="" class="h-22 w-52" /> -->
+          <img src="@/assets/logo-campus-connect.png" alt="" class="h-14" />
+          <img src="@/assets/logo with name.png" alt="" class="h-16" />
         </router-link>
-        <h1 class="font-bold text-3xl mb-5">Login</h1>
-        <h1 class="text-gray-800 font-bold text-2xl mb-1">Hello Again!</h1>
-        <p class="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
+        <!-- <h1 class="font-bold text-3xl mb-5">Login</h1> -->
+        <h1 class="text-gray-800 font-bold text-3xl mb-1">Hello Again!</h1>
+        <p class="text-md font-normal text-gray-600 mb-7">Welcome Back</p>
 
         <div class="flex flex-col w-80">
           <div class="mb-4">
@@ -118,7 +120,7 @@ const { handleSubmit } = useForm({
   validationSchema: formSchema
 })
 
-const isLoggedIn = computed(() => store.getters['User/isLoggedIn']);
+const isLoggedIn = computed(() => store.getters['User/isLoggedIn'])
 console.log(isLoggedIn.value)
 
 onMounted(async () => {

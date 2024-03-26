@@ -42,7 +42,7 @@ const UserModule = {
       const name = payload.name
       const email = payload.email
       const password = payload.password
-      let res = null;
+      let res = null
 
       axios.defaults.withCredentials = true
       axios.defaults.withXSRFToken = true
@@ -58,6 +58,13 @@ const UserModule = {
       context.commit('setToken', res.data.data.token)
       localStorage.setItem('access-token', res.data.data.token)
       return 'Registered Successfully'
+    },
+    async logout(context) {
+      await axios.post('/api/logout')
+      localStorage.clear()
+      context.commit('setUser', null)
+      context.commit('setToken', null)
+      return 'Logged Out Successfully'
     }
   },
   getters: {
