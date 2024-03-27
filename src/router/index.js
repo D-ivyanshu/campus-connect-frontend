@@ -6,6 +6,7 @@ import AddPost from '@/components/Posts/AddPost.vue'
 import ShowPost from '@/components/Posts/ShowPost.vue'
 import ProfilePage from '@/components/Profile/ProfilePage.vue'
 import ProfileCard from '@/components/Profile/ProfileCard.vue'
+import UploadMedia from '@/components/Posts/UploadMedia.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -45,11 +46,15 @@ const router = createRouter({
           component: ProfileCard
         }
       ]
+    },
+    {
+      path: '/upload',
+      name: 'media-upload',
+      component: UploadMedia
     }
   ]
 })
 
 export default router
 
-
-//TODO: make a before route navigation before /profile route 
+//TODO: make a before route navigation before /profile route

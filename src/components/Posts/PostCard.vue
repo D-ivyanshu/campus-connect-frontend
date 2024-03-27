@@ -110,9 +110,21 @@
         />
       </span>
       <!-- Image -->
-      <!-- <div class="mb-4">
-        <img src="@/assets/123.jpg" alt="Post Image" class="h-22 w-full object-fit rounded-md" />
-      </div> -->
+      <div v-if="mediaFiles?.length > 0 && !edit">
+          <div class="w-full flex items-center justify-center">
+            <Carousel class="relative w-full max-w-xl max-h-sm">
+              <CarouselContent>
+                <CarouselItem v-for="(media, index) in mediaFiles" :key="index">
+                  <div class="w-full bg-red-900 flex h-full items-center justify-center">
+                    <img :src="media" class="w-full" />
+                  </div>
+                </CarouselItem>
+              </CarouselContent>
+              <CarouselPrevious class="ml-12 text-gray-300 hover:text-gray-400 hover:bg-gray-100" />
+              <CarouselNext class="mr-12 text-gray-300 hover:text-gray-400 hover:bg-gray-100" />
+            </Carousel>
+          </div>
+        </div>
       <!-- Like and Comment Section -->
       <div class="flex items-center justify-between text-gray-500">
         <div class="flex items-center space-x-2">
@@ -181,10 +193,20 @@ import {
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from '@/components/ui/carousel'
+
+import { Card, CardContent } from '@/components/ui/card'
+
 import EditPost from '@/components/Posts/EditPost.vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDelete from '@/components/icons/IconDelete.vue'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useToast } from '@/components/ui/toast/use-toast'
 
@@ -195,6 +217,17 @@ const postInfo = ref('')
 const edit = ref(false)
 const props = defineProps(['post'])
 postInfo.value = props.post
+
+const mediaFiles = computed(() => {
+  if (postInfo.value?.data?.attributes?.media?.data) {
+    const mediaData = postInfo.value?.data?.attributes?.media?.data
+    return mediaData.map((mediaItem) => mediaItem.data.file_url)
+  } else {
+    return []
+  }
+})
+
+console.log(mediaFiles.value)
 
 const editPost = async () => {
   edit.value = !edit.value

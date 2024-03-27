@@ -39,7 +39,12 @@ const PostModule = {
       context.commit('setPosts', res?.data.data)
     },
     async addPost(context, payload) {
-      const res = await axios.post('/api/posts', payload)
+      console.log(payload)
+      const res = await axios.post('/api/posts', payload, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
       context.commit('pushPosts', res?.data.data)
       return res
     },

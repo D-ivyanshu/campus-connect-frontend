@@ -1,5 +1,5 @@
 <template>
-  <form class="flex flex-col ml-1 w-full" @submit="onSubmit">
+  <form class="flex flex-col ml-1 w-full" @submit="onSubmit" enctype="multipart/form-data">
     <div class="flex flex-col w-full">
       <div class="mb-4 w-full">
         <!-- Email -->
@@ -16,25 +16,39 @@
       </div>
     </div>
 
-    <!-- Submit Button -->
     <div class="flex justify-between m-2 items-center">
       <div class="flex space-x-3">
         <div class="flex items-center rounded-full bg-gray-100 pl-3.5 pr-3.5 p-2 hover:bg-gray-200">
           <label for="upload" class="cursor-pointer">
-            <IconGallery class="text-green-500" />
-            <h1 class="text-slate-500">Image</h1>
+            <div class="flex items-center rounded-full pl-1 pr-1">
+              <IconGallery class="text-green-500" />
+              <h1 class="text-slate-500">Image</h1>
+            </div>
           </label>
-          <input id="upload" type="file" class="hidden" />
+          <input
+            id="upload"
+            type="file"
+            class="hidden"
+            multiple
+            @change="handleImageUpload"
+            accept="images/*"
+          />
         </div>
         <div
           class="flex items-center rounded-full bg-gray-100 p-1.5 pl-3.5 pr-3.5 hover:bg-gray-200"
         >
-          <IconVideo class="text-red-500" />
-          <h1 class="text-slate-500">Video</h1>
+          <label for="upload" class="cursor-pointer">
+            <div class="flex items-center rounded-full pl-1 pr-1">
+              <IconVideo class="text-red-500" />
+              <h1 class="text-slate-500">Video</h1>
+            </div>
+          </label>
+          <input id="upload" type="file" class="hidden" multiple />
         </div>
       </div>
       <div></div>
 
+      <!-- Submit Button -->
       <Button
         type="submit"
         class="bg-indigo-600 hover:bg-indigo-500 rounded-2xl font-semibold right-0 flex items-center"
@@ -62,6 +76,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useForm } from 'vee-validate'
 import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { toTypedSchema } from '@vee-validate/zod'
@@ -82,15 +97,29 @@ const formSchema = toTypedSchema(
   })
 )
 
+const imageFiles = ref()
+
 const { handleSubmit } = useForm({
   validationSchema: formSchema
 })
 const store = useStore()
 
+const handleImageUpload = (event) => {
+  const files = event.target.files
+  console.log(files)
+  imageFiles.value = Array.from(files).filter((file) => file.type.startsWith('image/'))
+  console.log(imageFiles.value)
+}
+
 const onSubmit = handleSubmit(async (values) => {
   console.log(values)
+  console.log(imageFiles.value)
+
   try {
-    await store.dispatch('Post/addPost', values)
+    await store.dispatch('Post/addPost', {
+      ...values,
+      media: imageFiles.value
+    })
     toast({
       title: 'Post added successfully'
     })

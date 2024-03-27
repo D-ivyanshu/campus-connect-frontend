@@ -113,8 +113,12 @@
         </div>
       </div>
     </div>
-    <ShareSomething class="mt-5" />
-    <PostCard v-for="post in posts" :post="post" :key="post" />
+    <div class="flex flex-col justify-center items-center">
+      <main class="p-2 w-full md:w-[650px] pt-0 h-auto mt-16 rounded-lg overflow-y-auto">
+        <ShareSomething class="mt-5" />
+        <PostCard v-for="post in posts" :post="post" :key="post" />
+      </main>
+    </div>
   </div>
 </template>
 
