@@ -28,7 +28,7 @@
                   class="flex items-center rounded-full bg-gray-100 p-1.5 pl-3.5 pr-3.5 hover:bg-gray-200"
                 >
                   <IconVideo class="text-red-500" />
-                  <h1 class="text-slate-500">Video</h1>
+                  <h1 class="text-slate-500">Gifs</h1>
                 </div>
               </div>
               <div>

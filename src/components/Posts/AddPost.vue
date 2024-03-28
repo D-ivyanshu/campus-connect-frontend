@@ -31,18 +31,26 @@
             class="hidden"
             multiple
             @change="handleImageUpload"
-            accept="images/*"
+            accept="image/jpeg,image/jpg,image/png"
           />
         </div>
         <div
           class="flex items-center rounded-full bg-gray-100 p-1.5 pl-3.5 pr-3.5 hover:bg-gray-200"
         >
-          <label for="upload" class="cursor-pointer">
+          <label for="upload-video" class="cursor-pointer">
             <div class="flex items-center rounded-full pl-1 pr-1">
               <IconVideo class="text-red-500" />
-              <h1 class="text-slate-500">Video</h1>
+              <h1 class="text-slate-500">Gifs</h1>
             </div>
           </label>
+          <input
+            id="upload-video"
+            type="file"
+            class="hidden"
+            multiple
+            @change="handleImageUpload"
+            accept=".mp4,.gif"
+          />
           <input id="upload" type="file" class="hidden" multiple />
         </div>
       </div>

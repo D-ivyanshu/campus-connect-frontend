@@ -21,8 +21,9 @@
     <!-- Submit Button -->
     <div class="flex justify-between m-2 items-center">
       <div class="flex space-x-8">
-        <div>2</div>
-        <div>2</div>
+        <!-- TODO: have to correct this part if we will give them adding image fun -->
+        <!-- <div>2</div>
+        <div>2</div> -->
       </div>
 
       <div class="flex flex-row space-x-2 items-center">

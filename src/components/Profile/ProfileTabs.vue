@@ -82,15 +82,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
 import IconGallery from '@/components/icons/IconGallery.vue'
+import { useStore } from 'vuex'
 
-const emit = defineEmits(['selected'])
-const selectedTab = ref(1)
+const store = useStore()
+const selectedTab = computed(() => store.state.SelectedTab.selectedTab)
 
 const selectTab = (index) => {
-  console.log(selectedTab.value)
-  selectedTab.value = index
-  emit('selected', index)
+  store.dispatch('SelectedTab/updateSelectedTab', index)
 }
 </script>

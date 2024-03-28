@@ -3,15 +3,23 @@
     <div class="hover:bg-gray-50 bg-white p-8 rounded-2xl shadow-md w-full">
       <!-- User Info with Three-Dot Menu -->
       <div class="flex items-center justify-between mb-4 w-full">
-        <div class="flex items-center space-x-2">
-          <img src="@/assets/avatar/avatar3.jpg" class="rounded-full w-10 h-10" />
-          <div>
-            <p class="text-gray-800 font-semibold">
-              {{ postInfo?.data?.attributes.posted_by.data.attributes.name }}
-            </p>
-            <p class="text-gray-600 text-[12px]">
-              Posted {{ postInfo?.data?.attributes.posted_at }}
-            </p>
+        <div
+          class="hover:cursor-pointer"
+          @click="goToProfile(postInfo?.data?.attributes.posted_by.data.user_id)"
+        >
+          <div class="flex items-center space-x-2">
+            <img
+              :src="postInfo?.data?.attributes?.posted_by?.data?.attributes?.avatar"
+              class="rounded-full w-10 h-10"
+            />
+            <div>
+              <p class="text-gray-800 font-semibold hover:text-gray-600">
+                {{ postInfo?.data?.attributes.posted_by.data.attributes.name }}
+              </p>
+              <p class="text-gray-600 text-[12px]">
+                Posted {{ postInfo?.data?.attributes.posted_at }}
+              </p>
+            </div>
           </div>
         </div>
         <div class="text-gray-500 cursor-pointer">
@@ -100,7 +108,7 @@
 
       <router-link :to="'/posts/' + postInfo?.data?.post_id">
         <!-- Message -->
-        <div v-if="!edit" class="mb-4 prose" v-html="postInfo?.data?.attributes.body"></div>
+        <div v-if="!edit" class="mb-4 prose" v-html="messageBodyTrim"></div>
       </router-link>
       <span v-if="edit">
         <EditPost
@@ -111,20 +119,26 @@
       </span>
       <!-- Image -->
       <div v-if="mediaFiles?.length > 0 && !edit">
-          <div class="w-full flex items-center justify-center">
-            <Carousel class="relative w-full max-w-xl max-h-sm">
-              <CarouselContent>
-                <CarouselItem v-for="(media, index) in mediaFiles" :key="index">
-                  <div class="w-full bg-red-900 flex h-full items-center justify-center">
-                    <img :src="media" class="w-full" />
-                  </div>
-                </CarouselItem>
-              </CarouselContent>
-              <CarouselPrevious class="ml-12 text-gray-300 hover:text-gray-400 hover:bg-gray-100" />
-              <CarouselNext class="mr-12 text-gray-300 hover:text-gray-400 hover:bg-gray-100" />
-            </Carousel>
-          </div>
+        <div class="w-full flex items-center justify-center rounded-lg">
+          <Carousel class="relative w-full max-w-xl max-h-sm">
+            <CarouselContent>
+              <CarouselItem v-for="(media, index) in mediaFiles" :key="index">
+                <div class="w-fullflex h-full items-center justify-center rounded-md">
+                  <img :src="media" class="w-full rounded-lg" />
+                </div>
+              </CarouselItem>
+            </CarouselContent>
+            <div v-if="mediaFiles?.length > 1">
+              <CarouselPrevious
+                class="ml-12 text-gray-400 bg-gray-50 hover:text-gray-400 hover:bg-gray-100"
+              />
+              <CarouselNext
+                class="mr-12 text-gray-400 bg-gray-50 hover:text-gray-400 hover:bg-gray-100"
+              />
+            </div>
+          </Carousel>
         </div>
+      </div>
       <!-- Like and Comment Section -->
       <div class="flex items-center justify-between text-gray-500">
         <div class="flex items-center space-x-2">
@@ -201,14 +215,13 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel'
 
-import { Card, CardContent } from '@/components/ui/card'
-
 import EditPost from '@/components/Posts/EditPost.vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDelete from '@/components/icons/IconDelete.vue'
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useToast } from '@/components/ui/toast/use-toast'
+import router from '@/router'
 
 const store = useStore()
 const { toast } = useToast()
@@ -227,10 +240,24 @@ const mediaFiles = computed(() => {
   }
 })
 
-console.log(mediaFiles.value)
+const messageBodyTrim = computed(() => {
+  const body = postInfo.value?.data?.attributes.body || ''
+  const maxWords = 40
+  const words = body.trim().split(/\s+/)
+  if (words.length <= maxWords) {
+    return body
+  } else {
+    const truncatedText = words.slice(0, maxWords).join(' ')
+    return `${truncatedText} <br/> <span class="text-blue-500 text-md cursor-pointer">Show more</span>`
+  }
+})
 
 const editPost = async () => {
   edit.value = !edit.value
+}
+
+const goToProfile = (userId) => {
+  router.push({ name: 'profile-page-id', params: { id: userId } })
 }
 
 const deletePost = async () => {

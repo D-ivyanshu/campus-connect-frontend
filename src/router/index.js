@@ -43,6 +43,7 @@ const router = createRouter({
       children: [
         {
           path: ':id',
+          name: 'profile-page-id',
           component: ProfileCard
         }
       ]
@@ -52,7 +53,10 @@ const router = createRouter({
       name: 'media-upload',
       component: UploadMedia
     }
-  ]
+  ],
+  scrollBehavior() {
+    return { top: 0 }
+  }
 })
 
 export default router

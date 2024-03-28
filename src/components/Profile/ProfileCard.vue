@@ -51,9 +51,9 @@
   </div>
 
   <div class="mt-2">
-    <div v-if="selectedComponent === 1"><ProfileAbout /></div>
-    <div v-if="selectedComponent === 2"><ProfileFollowers /></div>
-    <div v-if="selectedComponent === 3"><ProfileFriends /></div>
+    <div v-if="selectedTab === 1"><ProfileAbout /></div>
+    <div v-if="selectedTab === 2"><ProfileFollowers /></div>
+    <div v-if="selectedTab === 3"><ProfileFriends /></div>
   </div>
 </template>
 
@@ -72,12 +72,8 @@ import IconTick from '@/components/icons/IconTick.vue'
 const route = useRoute()
 const store = useStore()
 
-const selectedComponent = ref(1)
 const User = computed(() => store.state.User.user)
-
-const handleTabSelected = (index) => {
-  selectedComponent.value = index
-}
+const selectedTab = computed(() => store.state.SelectedTab.selectedTab)
 
 const buttonText = ref(null)
 

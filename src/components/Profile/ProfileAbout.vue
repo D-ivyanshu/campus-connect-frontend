@@ -114,8 +114,10 @@
       </div>
     </div>
     <div class="flex flex-col justify-center items-center">
-      <main class="p-2 w-full md:w-[650px] pt-0 h-auto mt-16 rounded-lg overflow-y-auto">
-        <ShareSomething class="mt-5" />
+      <main class="p-2 w-full md:w-[650px] pt-0 h-auto mt-6 rounded-lg overflow-y-auto">
+        <div v-if="AuthenticatedUser.id == route.params.id">
+          <ShareSomething class="mt-5" />
+        </div>
         <PostCard v-for="post in posts" :post="post" :key="post" />
       </main>
     </div>
@@ -124,17 +126,32 @@
 
 <script setup>
 import { Separator } from '@/components/ui/separator'
-import { ref, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import axios from '@/api.js'
 import ShareSomething from '@/components/Posts/ShareSomething.vue'
 import PostCard from '@/components/Posts/PostCard.vue'
 
 const route = useRoute()
+const store = useStore()
 const User = ref(null)
 const posts = ref(null)
 
 onMounted(async () => {
+  fetchData()
+})
+
+watch(
+  () => route,
+  () => {
+    fetchData()
+  }
+)
+
+const AuthenticatedUser = computed(() => store.state.User.user)
+
+const fetchData = async () => {
   try {
     const res = await axios.get(`/api/user/${route.params.id}`)
     const postres = await axios.get(`/api/user/${route.params.id}/posts`)
@@ -143,5 +160,5 @@ onMounted(async () => {
   } catch (error) {
     console.log(error)
   }
-})
+}
 </script>

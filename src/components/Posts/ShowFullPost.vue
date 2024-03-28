@@ -1,15 +1,23 @@
 <template>
-  <div class="border-2 border-dashed rounded-2xl border-gray-300 dark:border-gray-600 mb-4">
+  <div class="border rounded-2xl border-gray-100 shadow dark:border-gray-600 mb-4">
     <div class="hover:bg-gray-50 bg-white p-8 rounded-2xl shadow-md w-full">
       <!-- User Info with Three-Dot Menu -->
       <div class="flex items-center justify-between mb-4 w-full">
-        <div class="flex items-center space-x-2">
-          <img src="@/assets/avatar/avatar3.jpg" class="rounded-full w-10 h-10" />
-          <div>
-            <p class="text-gray-800 font-semibold">
-              {{ post?.data.attributes.posted_by.data.attributes.name }}
-            </p>
-            <p class="text-gray-600 text-[12px]">Posted {{ post?.data.attributes.posted_at }}</p>
+        <div
+          class="hover:cursor-pointer"
+          @click="goToProfile(post?.data.attributes.posted_by.data.user_id)"
+        >
+          <div class="flex items-center space-x-2">
+            <img
+              :src="post?.data.attributes.posted_by.data.attributes.avatar"
+              class="rounded-full w-10 h-10"
+            />
+            <div>
+              <p class="text-gray-800 font-semibold">
+                {{ post?.data.attributes.posted_by.data.attributes.name }}
+              </p>
+              <p class="text-gray-600 text-[12px]">Posted {{ post?.data.attributes.posted_at }}</p>
+            </div>
           </div>
         </div>
         <div class="text-gray-500 cursor-pointer">
@@ -103,9 +111,27 @@
       </span>
 
       <!-- Image -->
-      <!-- <div class="mb-4">
-          <img src="@/assets/123.jpg" alt="Post Image" class="w-full object-fit rounded-md" />
-        </div> -->
+      <div v-if="mediaFiles?.length > 0 && !edit">
+        <div class="w-full flex items-center justify-center">
+          <Carousel class="relative w-full max-w-xl max-h-sm">
+            <CarouselContent>
+              <CarouselItem v-for="(media, index) in mediaFiles" :key="index">
+                <div class="w-full bg-red-900 flex h-full items-center justify-center">
+                  <img :src="media" class="w-full" />
+                </div>
+              </CarouselItem>
+            </CarouselContent>
+            <div v-if="mediaFiles?.length > 1">
+              <CarouselPrevious
+                class="ml-12 text-gray-400 bg-gray-50 hover:text-gray-400 hover:bg-gray-100"
+              />
+              <CarouselNext
+                class="mr-12 text-gray-400 bg-gray-50 hover:text-gray-400 hover:bg-gray-100"
+              />
+            </div>
+          </Carousel>
+        </div>
+      </div>
       <!-- Like and Comment Section -->
       <div class="flex items-center justify-between text-gray-500">
         <div class="flex items-center space-x-2">
@@ -202,6 +228,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from '@/components/ui/carousel'
+
 import EditPost from '@/components/Posts/EditPost.vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDelete from '@/components/icons/IconDelete.vue'
@@ -221,6 +256,19 @@ const { toast } = useToast()
 const commentValue = ref('')
 const edit = ref(false)
 const post = computed(() => store.getters['Post/postById'](route.params.id))
+
+const mediaFiles = computed(() => {
+  if (post.value?.data?.attributes?.media?.data) {
+    const mediaData = post.value?.data?.attributes?.media?.data
+    return mediaData.map((mediaItem) => mediaItem.data.file_url)
+  } else {
+    return []
+  }
+})
+
+const goToProfile = (userId) => {
+  router.push({ name: 'profile-page-id', params: { id: userId } })
+}
 
 const editPost = async () => {
   edit.value = !edit.value

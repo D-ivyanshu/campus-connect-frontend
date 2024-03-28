@@ -6,15 +6,17 @@
       <img :src="props?.follower?.data?.attributes?.avatar" class="rounded-full w-14 h-14" />
     </div>
     <div class="flex justify-between w-full md:items-center flex-col sm:space-y-2 md:flex-row">
-      <div class="flex-col">
-        <div class="text-lg font-semibold">{{ props?.follower?.data?.attributes?.name }}</div>
-        <div class="text-sm text-slate-600 mb-1">
-          {{ props?.follower?.data?.attributes?.email }}
-        </div>
-        <div
-          class="w-14 text-sm bg-green-200 ring-1 ring-green-100 rounded-md text-center text-green-500"
-        >
-          Year
+      <div class="hover:cursor-pointer" @click="goToProfile(props?.follower?.data?.user_id)">
+        <div class="flex-col">
+          <div class="text-lg font-semibold">{{ props?.follower?.data?.attributes?.name }}</div>
+          <div class="text-sm text-slate-600 mb-1">
+            {{ props?.follower?.data?.attributes?.email }}
+          </div>
+          <div
+            class="w-14 text-sm bg-green-200 ring-1 ring-green-100 rounded-md text-center text-green-500"
+          >
+            Year
+          </div>
         </div>
       </div>
       <div v-if="User.id == route.params.id">
@@ -45,6 +47,7 @@ import { useStore } from 'vuex'
 import Button from '@/components/ui/button/Button.vue'
 import { useRoute } from 'vue-router'
 import IconTick from '@/components/icons/IconTick.vue'
+import router from '@/router'
 
 const route = useRoute()
 const store = useStore()
@@ -69,6 +72,9 @@ const unfollowUser = () => {
     action: 'unfollow'
   })
 }
+
+const goToProfile = (userId) => {
+  store.dispatch('SelectedTab/updateSelectedTab', 1)
+  router.push({ name: 'profile-page-id', params: { id: userId } })
+}
 </script>
-
-
