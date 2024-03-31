@@ -1,13 +1,17 @@
 <template>
-  <form class="flex flex-col ml-1 w-full" @submit="onSubmit" enctype="multipart/form-data">
+  <form
+    class="flex flex-col ml-1 w-full md:max-w-[400px] lg:max-w-[600px] rounded-lg"
+    @submit="onSubmit"
+    enctype="multipart/form-data"
+  >
     <div class="flex flex-col w-full">
       <div class="mb-4 w-full">
         <!-- Email -->
         <FormField v-slot="{ componentField }" name="body">
           <FormItem v-auto-animate>
-            <FormControl>
-              <div class="relative items-center flex">
-                <MyEditor v-bind="componentField" class="w-full" />
+            <FormControl class="w-full">
+              <div class="relative items-center flex w-full overflow-hidden whitespace-normal">
+                <MyEditor v-bind="componentField" class="w-full rounded-lg" />
               </div>
             </FormControl>
             <FormMessage />

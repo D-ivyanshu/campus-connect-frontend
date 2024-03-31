@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useStore } from 'vuex'
+
 import LoginPage from '@/views/Auth/LoginPage.vue'
 import RegisterPage from '@/views/Auth/RegisterPage.vue'
 import HomePage from '@/views/HomePage.vue'
@@ -44,7 +46,13 @@ const router = createRouter({
         {
           path: ':id',
           name: 'profile-page-id',
-          component: ProfileCard
+          component: ProfileCard,
+          // before entering the route dispatch the selectedtab as 1
+          beforeEnter: (to, from, next) => {
+            const store = useStore()
+            store.dispatch('SelectedTab/updateSelectedTab', 1)
+            next()
+          }
         }
       ]
     },

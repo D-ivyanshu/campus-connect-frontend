@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="overflow-hidden">
     <Dialog class="sm:h-10 md:max-w-[425px] lg:max-w-2xl">
       <div class="border rounded-2xl border-gray-100 shadow dark:border-gray-600 mb-4">
         <DialogTrigger class="w-full">
@@ -40,7 +40,7 @@
           </div>
         </DialogTrigger>
       </div>
-      <DialogContent class="sm:max-w-[425px] lg:max-w-2xl">
+      <DialogContent class="sm:max-w-[425px] lg:max-w-2xl overflow-hidden w-full">
         <DialogHeader>
           <DialogTitle class="text-2xl">What is happening ?</DialogTitle>
           <DialogDescription>

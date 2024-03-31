@@ -6,13 +6,13 @@
           class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"
         >
           <img
-            :src="commentValue?.data.attributes.commented_by.data.attributes.avatar"
+            :src="commentValue?.data?.attributes?.commented_by.data.attributes.avatar"
             class="rounded-full w-8 h-8 mr-3"
           />
-          {{ commentValue?.data.attributes.commented_by.data.attributes.name }}
+          {{ commentValue?.data?.attributes?.commented_by.data.attributes.name }}
         </p>
         <p class="hidden md:block text-sm text-gray-500 dark:text-gray-400">
-          {{ commentValue?.data.commented_at }}
+          {{ commentValue?.data?.commented_at }}
         </p>
       </div>
 
@@ -54,25 +54,34 @@
     </footer>
     <div
       class="mb-4 prose text-gray-500 dark:text-gray-400 text-sm"
-      v-html="commentValue?.data.body"
+      v-html="commentValue?.data?.body"
     ></div>
     <div class="flex items-center text-gray-500">
-      <div class="flex items-center space-x-6">
-        <button class="flex justify-center items-center gap-2 px-2 p-1">
+      <div class="flex items-center hover:text-pink-500">
+        <button
+          class="flex justify-center items-center gap-2 p-2 hover:bg-pink-200 hover:rounded-full"
+          @click="toggleReaction()"
+        >
           <svg
-            class="w-4 h-4 fill-current hover:scale-125"
+            class="w-6 h-6 p-1 hover:scale-110"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             stroke-width="2"
+            :class="commentValue?.data?.user_has_reaction ? 'fill-pink-500' : 'fill-white'"
+            @click="toggleAnimation"
           >
             <path
               d="M12 21.35l-1.45-1.32C6.11 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-4.11 6.86-8.55 11.54L12 21.35z"
-              fill="gray"
+              class="stroke-pink-500"
+              :class="{ 'scale-100': isAnimating }"
             />
           </svg>
-          <span class="text-sm">Like</span>
         </button>
+        <div>
+          <span>{{ commentValue?.data?.cnt_of_reactions }}</span>
+        </div>
       </div>
+
       <button class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1">
         <svg
           viewBox="0 0 24 24"
@@ -107,19 +116,31 @@ import IconDelete from '@/components/icons/IconDelete.vue'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
+import axios from '@/api.js'
 
 const commentValue = ref(null)
 const props = defineProps(['comment'])
 commentValue.value = props.comment
-
+console.log(commentValue.value)
 const route = useRoute()
 const store = useStore()
-console.log(commentValue.value.data.comment_id)
 
 const deleteComment = async () => {
   await store.dispatch('Post/removeComment', {
     postId: route.params.id,
     commentId: commentValue.value.data.comment_id
   })
+}
+
+const toggleReaction = async () => {
+  try {
+    const res = await axios.post(`/api/comments/${commentValue.value.data.comment_id}/reaction`, {
+      reaction: 'like'
+    })
+    commentValue.value.data.cnt_of_reactions = res.data.reactions
+    commentValue.value.data.user_has_reaction = res.data.user_has_reaction
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>

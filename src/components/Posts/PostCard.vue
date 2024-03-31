@@ -123,8 +123,8 @@
           <Carousel class="relative w-full max-w-xl max-h-sm">
             <CarouselContent>
               <CarouselItem v-for="(media, index) in mediaFiles" :key="index">
-                <div class="w-fullflex h-full items-center justify-center rounded-md">
-                  <img :src="media" class="w-full rounded-lg" />
+                <div class="w-full flex h-full items-center justify-center rounded-2xl">
+                  <img :src="media" class="w-full rounded-2xl" />
                 </div>
               </CarouselItem>
             </CarouselContent>
@@ -141,26 +141,33 @@
       </div>
       <!-- Like and Comment Section -->
       <div class="flex items-center justify-between text-gray-500">
-        <div class="flex items-center space-x-2">
-          <button class="flex justify-center items-center gap-2 px-2 p-1">
+        <div class="flex items-center hover:text-pink-500">
+          <button
+            class="flex justify-center items-center gap-2 p-2 hover:bg-pink-200 hover:rounded-full"
+            @click="toggleReaction()"
+          >
             <svg
-              class="w-5 h-5 fill-current hover:scale-125"
+              class="w-7 h-7 p-1 hover:scale-110"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               stroke-width="2"
+              :class="postInfo?.data?.attributes.user_has_reaction ? 'fill-pink-500' : 'fill-white'"
+              @click="toggleAnimation"
             >
               <path
                 d="M12 21.35l-1.45-1.32C6.11 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-4.11 6.86-8.55 11.54L12 21.35z"
-                fill="gray"
+                class="stroke-pink-500"
+                :class="{ 'scale-100': isAnimating }"
               />
             </svg>
-            <router-link :to="'/posts/' + postInfo?.data?.post_id">
-              <span>42 Likes</span>
-            </router-link>
           </button>
+          <div>
+            <span>{{ postInfo?.data?.attributes.cnt_of_reactions }}</span>
+          </div>
         </div>
+        <!-- TODO: add same for comment thing like like one -->
         <button
-          class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 rounded-full p-1"
+          class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 hover:rounded-full"
         >
           <svg
             width="22px"
@@ -222,11 +229,13 @@ import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useToast } from '@/components/ui/toast/use-toast'
 import router from '@/router'
+import axios from '@/api.js'
 
 const store = useStore()
 const { toast } = useToast()
 
 const postInfo = ref('')
+const isAnimating = ref(true)
 const edit = ref(false)
 const props = defineProps(['post'])
 postInfo.value = props.post
@@ -267,5 +276,24 @@ const deletePost = async () => {
   toast({
     title: 'Post Deleted Successfully'
   })
+}
+
+const toggleReaction = async () => {
+  try {
+    const res = await axios.post(`/api/posts/${postInfo.value?.data?.post_id}/reaction`, {
+      reaction: 'like'
+    })
+    postInfo.value.data.attributes.cnt_of_reactions = res.data.reactions
+    postInfo.value.data.attributes.user_has_reaction = res.data.user_has_reaction
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const toggleAnimation = () => {
+  isAnimating.value = true
+  setTimeout(() => {
+    isAnimating.value = false
+  }, 1000) // Adjust the duration based on your animation duration
 }
 </script>

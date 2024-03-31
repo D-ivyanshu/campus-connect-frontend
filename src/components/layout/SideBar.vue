@@ -35,24 +35,6 @@
             <span class="ml-3">News Feed</span>
           </a>
         </li>
-        <li>
-          <a
-            href="#"
-            class="flex items-center p-2 text-base font-medium text-white-900 rounded-lg dark:text-white hover:bg-primary hover:text-white dark:hover:bg-gray-700 group"
-          >
-            <svg
-              aria-hidden="true"
-              class="w-6 h-6 mr-3 text-primary transition duration-75 dark:text-gray-400 group-hover:text-white dark:group-hover:text-white"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-              <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-            </svg>
-            make a post
-          </a>
-        </li>
 
         <li>
           <a
@@ -69,9 +51,10 @@
               <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
               <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
             </svg>
-            <span class="ml-3">Profile page</span>
+            <span class="ml-3">Your Profile</span>
           </a>
         </li>
+
         <li>
           <a
             href="#"
@@ -87,9 +70,23 @@
               <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
               <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
             </svg>
-            <span class="ml-3">Settings</span>
+            <Sheet class="h-full w-full">
+              <SheetTrigger>
+                <span class="ml-3">Notifications</span>
+              </SheetTrigger>
+              <SheetContent class="w-[400px] sm:w-[540px]">
+                <SheetHeader>
+                  <SheetTitle class="font-semibold text-xl">Notifications</SheetTitle>
+                  <hr class="mt-3 w-full h-[1px] rounded-xl bg-gray-300" />
+                </SheetHeader>
+                <div class="flex flex-col items-center justify-center">
+                  <Notification />
+                </div>
+              </SheetContent>
+            </Sheet>
           </a>
         </li>
+
         <li @click="logout">
           <a
             href="#"
@@ -129,6 +126,8 @@
 </template>
 
 <script setup>
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import Notification from '@/components/Notifications/Notification.vue'
 import { computed } from 'vue'
 import { useStore } from 'vuex'
 import router from '@/router'

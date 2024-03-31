@@ -99,4 +99,5 @@ const handleFollowActions = async (data) => {
     console.log(error)
   }
 }
+
 </script>

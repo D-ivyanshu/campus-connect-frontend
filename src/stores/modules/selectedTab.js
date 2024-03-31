@@ -2,7 +2,7 @@ const SelectedTabModule = {
   namespaced: true,
   state() {
     return {
-      selectedTab: null
+      selectedTab: 1
     }
   },
   mutations: {

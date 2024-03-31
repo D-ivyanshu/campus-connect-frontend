@@ -13,9 +13,24 @@
           <div class="text-xl font-semibold text-slate-700">Feeds</div>
           <div class="flex">
             <ul class="flex justify-between space-x-5 text-sm text-slate-700">
-              <li><a href="#">Recent</a></li>
-              <li><a href="#">Friends</a></li>
-              <li><a href="#">Popular</a></li>
+              <li
+                :class="{ 'text-gray-900': selectedTab === 1, 'text-gray-300': selectedTab !== 1 }"
+                @click="selectedTab = 1"
+              >
+                <a href="#">Recent</a>
+              </li>
+              <li
+                :class="{ 'text-gray-900': selectedTab === 2, 'text-gray-300': selectedTab !== 2 }"
+                @click="selectedTab = 2"
+              >
+                <a href="#">Friends</a>
+              </li>
+              <li
+                :class="{ 'text-gray-900': selectedTab === 3, 'text-gray-300': selectedTab !== 3 }"
+                @click="selectedTab = 3"
+              >
+                <a href="#">Popular</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -23,11 +38,7 @@
         <!-- Add a post -->
         <ShareSomething />
 
-        <!-- POSTS -->
-        <!-- <div v-for="(post, postKey) in posts" :key="post">
-          <SocialPost :post="post" :postKey="postKey" />
-        </div> -->
-        <!-- {{ posts }} -->
+        <!-- Post -->
         <PostCard v-for="post in posts" :post="post" :key="post" />
       </div>
     </main>
@@ -35,7 +46,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import SideBar from '@/components/layout/SideBar.vue'
 import RightSideBar from '@/components/layout/RightSideBar.vue'
@@ -46,6 +57,7 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 const posts = computed(() => store.getters['Post/posts'])
+const selectedTab = ref(1)
 
 onMounted(async () => {
   try {
