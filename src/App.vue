@@ -1,6 +1,8 @@
 <template>
-  <router-view></router-view>
-  <Toaster />
+  <div>
+    <router-view></router-view>
+    <Toaster />
+  </div>
 </template>
 
 <script setup>

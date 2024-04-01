@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="fixed top-0 hidden md:block right-0 z-40 w-70 h-screen pt-14 transition-transform -translate-x-full border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
+    class="fixed top-0 hidden md:block right-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700"
     aria-label="Sidenav"
   >
     <div class="overflow-y-auto py-5 px-3 h-full dark:bg-gray-800">

@@ -121,7 +121,7 @@ import axios from '@/api.js'
 const commentValue = ref(null)
 const props = defineProps(['comment'])
 commentValue.value = props.comment
-console.log(commentValue.value)
+
 const route = useRoute()
 const store = useStore()
 

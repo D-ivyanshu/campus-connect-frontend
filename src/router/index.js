@@ -8,6 +8,7 @@ import AddPost from '@/components/Posts/AddPost.vue'
 import ShowPost from '@/components/Posts/ShowPost.vue'
 import ProfilePage from '@/components/Profile/ProfilePage.vue'
 import ProfileCard from '@/components/Profile/ProfileCard.vue'
+import SettingPage from '@/components/Setting/SettingPage.vue'
 import UploadMedia from '@/components/Posts/UploadMedia.vue'
 
 const router = createRouter({
@@ -60,6 +61,11 @@ const router = createRouter({
       path: '/upload',
       name: 'media-upload',
       component: UploadMedia
+    },
+    {
+      path: '/setting',
+      name: 'setting',
+      component: SettingPage
     }
   ],
   scrollBehavior() {
