@@ -32,7 +32,9 @@ const UserModule = {
         email: email,
         password: password
       })
-      context.commit('setUser', res.data.data.user)
+
+      console.log(res)
+      context.commit('setUser', res.data.data)
       context.commit('setToken', res.data.data.token)
       localStorage.setItem('access-token', res.data.data.token)
       return 'Logged In Successfully'
@@ -54,9 +56,9 @@ const UserModule = {
         password_confirmation: password
       })
       //TODO: for now i m using this but after using email-verification we can send emails too and then i will change this.
-      context.commit('setUser', res.data.data.user)
-      context.commit('setToken', res.data.data.token)
-      localStorage.setItem('access-token', res.data.data.token)
+      context.commit('setUser', res.data.data.data)
+      context.commit('setToken', res.data.data.data.token)
+      localStorage.setItem('access-token', res.data.data.data.token)
       return 'Registered Successfully'
     },
     async logout(context) {

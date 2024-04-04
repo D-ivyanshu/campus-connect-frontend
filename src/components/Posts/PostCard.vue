@@ -118,9 +118,9 @@
         />
       </span>
       <!-- Image -->
-      <div v-if="mediaFiles?.length > 0 && !edit">
+      <div v-if="mediaFiles?.length > 0 && !edit" class="h-full">
         <div class="w-full flex items-center justify-center rounded-lg">
-          <Carousel class="relative w-full max-w-xl max-h-sm">
+          <Carousel class="relative w-full max-w-xl">
             <CarouselContent>
               <CarouselItem v-for="(media, index) in mediaFiles" :key="index">
                 <div class="w-full flex h-full items-center justify-center rounded-2xl">

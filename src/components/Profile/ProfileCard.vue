@@ -13,7 +13,11 @@
 
       <div class="w-full mx-auto absolute left-5 top-20 flex items-center space-x-3">
         <div class="w-32 h-32 border-2 border-white rounded-full overflow-hidden">
-          <img class="rounded-full" src="@/assets/avatar/avatar6.png" alt="Woman looking front" />
+          <img
+            class="rounded-full"
+            src="https://res.cloudinary.com/duwukinfy/image/upload/v1712124652/uunlnpyiaflmuexpkx7j.jpg"
+            alt="Woman looking front"
+          />
         </div>
         <div>
           <div>
@@ -99,5 +103,4 @@ const handleFollowActions = async (data) => {
     console.log(error)
   }
 }
-
 </script>

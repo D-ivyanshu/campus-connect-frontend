@@ -24,4 +24,6 @@ import NotificationComment from '@/components/Notifications/NotificationComment.
 import NotificationFollow from '@/components/Notifications/NotificationFollow.vue'
 
 const props = defineProps(['notifications'])
+
+console.log(props.notifications)
 </script>

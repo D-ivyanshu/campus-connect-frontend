@@ -1,18 +1,18 @@
 <template>
   <aside
-    class="fixed top-0 left-0 z-40 bg-white w-64 h-screen mt-3 transition-transform -translate-x-full md:translate-x-0"
+    class="fixed top-0 left-0 z-40 bg-white w-64 h-screen mt-3 transition-transform -translate-x-full lg:translate-x-0"
     aria-label="Sidenav"
     id="drawer-navigation"
   >
     <div class="flex flex-col justify-center px-3 h-full dark:bg-gray-800">
       <div class="w-full h-22 flex items-start justify-center mb-6">
-        <div @click="goToProfile(User?.id)" class="flex flex-col items-center cursor-pointer">
+        <div @click="goToProfile(User?.user_id)" class="flex flex-col items-center cursor-pointer">
           <div>
-            <img src="@/assets/avatar/avatar6.png" class="rounded-full w-14 h-14" />
+            <img :src="User?.attributes.avatar" class="rounded-full w-14 h-14" />
           </div>
           <div class="flex flex-col items-center">
-            <span class="text-md">{{ User?.name }}</span>
-            <span class="text-sm">{{ User?.email }}</span>
+            <span class="text-md">{{ User?.attributes.name }}</span>
+            <span class="text-sm">{{ User?.attributes.email }}</span>
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
 
         <li>
           <a
-            :href="`/profile/${User?.id}`"
+            :href="`/profile/${User?.user_id}`"
             class="flex items-center p-2 text-base font-medium text-white-900 rounded-lg dark:text-white hover:bg-primary hover:text-white dark:hover:bg-gray-700 group"
           >
             <span class="transform transition-transform group-hover:scale-110">
@@ -74,7 +74,7 @@
 
         <li>
           <a
-            href="/"
+            href="/setting"
             class="flex items-center p-2 text-base font-medium text-white-900 rounded-lg dark:text-white hover:bg-primary hover:text-white dark:hover:bg-gray-700 group"
           >
             <span class="transform transition-transform group-hover:scale-110">
@@ -132,6 +132,8 @@ const store = useStore()
 
 const User = computed(() => store.state.User.user)
 
+console.log(User.value)
+
 const logout = async () => {
   await store.dispatch('User/logout')
   router.push('/login')
@@ -146,7 +148,7 @@ const goToProfile = (userId) => {
 
 onMounted(async () => {
   try {
-    const res = await axios.get(`/api/user/${User.value.id}/notification`)
+    const res = await axios.get(`/api/user/${User.value.user_id}/notification`)
     console.log(res)
     notifications.value = res.data.notifications
     notificationCount.value = notifications.value?.length
@@ -157,7 +159,7 @@ onMounted(async () => {
 
 const clearNotifications = async () => {
   try {
-    await axios.get(`/api/user/${User.value.id}/notification/read-all`)
+    await axios.get(`/api/user/${User.value.user_id}/notification/read-all`)
     notifications.value = ''
     notificationCount.value = 0
   } catch (error) {

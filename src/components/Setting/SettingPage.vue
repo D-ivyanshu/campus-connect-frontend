@@ -33,27 +33,7 @@
             <UpdateProfile />
           </TabsContent>
           <TabsContent value="notification" class="mt-4">
-            <Card>
-              <CardHeader>
-                <CardTitle>Password</CardTitle>
-                <CardDescription>
-                  Change your password here. After saving, you'll be logged out.
-                </CardDescription>
-              </CardHeader>
-              <CardContent class="space-y-2">
-                <div class="space-y-1">
-                  <Label for="current">Current password</Label>
-                  <Input id="current" type="password" />
-                </div>
-                <div class="space-y-1">
-                  <Label for="new">New password</Label>
-                  <Input id="new" type="password" />
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button>Save password</Button>
-              </CardFooter>
-            </Card>
+            <NotificationSetting />
           </TabsContent>
         </Tabs>
       </div>
@@ -68,6 +48,8 @@ import SideBar from '@/components/layout/SideBar.vue'
 import RightSideBar from '@/components/layout/RightSideBar.vue'
 import IconProfileBlock from '@/components/icons/IconProfileBlock.vue'
 import IconBell from '@/components/icons/IconBell.vue'
+import UpdateProfile from '@/components/Setting/UpdateProfile.vue'
+import NotificationSetting from '@/components/Setting/NotificationSetting.vue'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -81,8 +63,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-
-import UpdateProfile from '@/components/Setting/UpdateProfile.vue'
 
 const selectedTab = ref('profile')
 
