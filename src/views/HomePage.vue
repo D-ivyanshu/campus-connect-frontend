@@ -10,7 +10,7 @@
     >
       <div>
         <div class="bg-white mb-5 flex justify-between">
-          <div class="text-xl font-semibold text-slate-700">Feeds</div>
+          <div class="text-xl font-semibold">Feeds</div>
           <div class="flex">
             <ul class="flex justify-between space-x-5 text-sm text-slate-700">
               <li

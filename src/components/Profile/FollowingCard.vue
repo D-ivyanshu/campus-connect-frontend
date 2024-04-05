@@ -1,15 +1,15 @@
 <template>
   <div
-    class="flex flex-col items-start sm:flex-row sm:space-y-0 sm:space-x-6 px-4 py-8 border-1 border-gray-400 dark:border-gray-400 shadow-xl rounded-lg"
+    class="flex flex-col items-start sm:flex-row sm:space-y-0 sm:space-x-6 px-3 py-6 border-1 border-gray-400 dark:border-gray-400 shadow-xl rounded-lg"
   >
     <div class="rounded-full w-20">
-      <img :src="props?.following?.data?.attributes?.avatar" class="rounded-full w-14 h-14" />
+      <img :src="props?.following?.data?.attributes?.avatar" class="rounded-full" />
     </div>
     <div class="flex justify-between w-full md:items-center flex-col sm:space-y-2 md:flex-row">
       <div class="hover:cursor-pointer" @click="goToProfile(props?.following?.data?.user_id)">
         <div class="flex-col">
-          <div class="text-lg font-semibold">{{ props?.following?.data?.attributes?.name }}</div>
-          <div class="text-sm text-slate-600 mb-1">
+          <div class="text-sm font-semibold">{{ props?.following?.data?.attributes?.name }}</div>
+          <div class="text-[12px] text-slate-600 mb-1">
             {{ props?.following?.data?.attributes?.email }}
           </div>
           <div
@@ -19,9 +19,9 @@
           </div>
         </div>
       </div>
-      <div v-if="User.id == route.params.id">
+      <div v-if="User.user_id == route.params.id">
         <Button
-          class="mt-2 w-14 text-[12px] h-8 bg-white text-black border-[1.5px] hover:bg-gray-100 hover:border-black"
+          class="-mt-1 w-12 text-[10px] h-8 bg-white text-black border-[1.5px] hover:bg-gray-100 hover:border-black"
           @click="unfollowUser"
           >Unfollow</Button
         >
@@ -47,7 +47,7 @@ const props = defineProps(['following'])
 
 const unfollowUser = () => {
   emits('unfollow', {
-    userId: User.value.id,
+    userId: User.value.user_id,
     followerId: props.following.data.user_id
   })
 }

@@ -6,28 +6,24 @@
       <div class="rounded-t-lg h-48 overflow-hidden">
         <img
           class="object-cover object-top w-full"
-          src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1926&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          :src="User.attributes.banner"
           alt="Cover Photo"
         />
       </div>
 
       <div class="w-full mx-auto absolute left-5 top-20 flex items-center space-x-3">
         <div class="w-32 h-32 border-2 border-white rounded-full overflow-hidden">
-          <img
-            class="rounded-full"
-            src="https://res.cloudinary.com/duwukinfy/image/upload/v1712124652/uunlnpyiaflmuexpkx7j.jpg"
-            alt="Woman looking front"
-          />
+          <img class="rounded-full" :src="User.attributes.avatar" alt="Woman looking front" />
         </div>
         <div>
           <div>
-            <h1 class="text-xl font-bold text-white">Divyanshu Upreti</h1>
-            <p class="text-slate-400 text-md">Computer Science</p>
+            <h1 class="text-xl font-bold text-white">{{ User.attributes.name }}</h1>
+            <p class="text-slate-400 text-md">{{ branch }}</p>
           </div>
         </div>
       </div>
       <div
-        v-if="User.id != route.params.id"
+        v-if="User.user_id != route.params.id"
         class="right-0 top-36 w-15 absolute lg:right-10 lg:top-32"
       >
         <div v-if="buttonText == 'follow'">
@@ -78,6 +74,22 @@ const store = useStore()
 
 const User = computed(() => store.state.User.user)
 const selectedTab = computed(() => store.state.SelectedTab.selectedTab)
+
+const branches = {
+  cse: 'Computer Science and Engineering',
+  it: 'Information Technology',
+  ece: 'Electronics and Communication Engineering',
+  el: 'Electrical Engineering',
+  me: 'Mechanical Engineering',
+  civ: 'Civil Engineering'
+}
+
+const branch = computed(() => {
+  const val = User.value?.attributes?.branch
+  return branches[val]
+})
+
+console.log(branch.value)
 
 const buttonText = ref(null)
 

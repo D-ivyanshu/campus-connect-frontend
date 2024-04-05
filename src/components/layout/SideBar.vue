@@ -11,45 +11,50 @@
             <img :src="User?.attributes.avatar" class="rounded-full w-14 h-14" />
           </div>
           <div class="flex flex-col items-center">
-            <span class="text-md">{{ User?.attributes.name }}</span>
+            <span class="text-md w-32 whitespace-normal font-semibold">{{
+              User?.attributes.name
+            }}</span>
             <span class="text-sm">{{ User?.attributes.email }}</span>
           </div>
         </div>
       </div>
       <ul class="space-y-2 ml-3 mr-3">
-        <li>
+        <li @click="selectTab('home')">
           <a
             href="/"
-            class="flex items-center p-2 text-base font-medium text-white-900 rounded-lg dark:text-white hover:bg-primary hover:text-white dark:hover:bg-gray-700 group"
+            :class="{ 'bg-primary text-white scale-100': selectedTab == 'home' }"
+            class="flex items-center p-2 text-base font-medium rounded-lg group"
           >
             <span class="transform transition-transform group-hover:scale-110">
-              <IconHome class="group-hover:text-white" />
+              <IconHome class="" />
             </span>
             <span class="ml-3">Home</span>
           </a>
         </li>
 
-        <li>
+        <li @click="selectTab('profile')">
           <a
             :href="`/profile/${User?.user_id}`"
-            class="flex items-center p-2 text-base font-medium text-white-900 rounded-lg dark:text-white hover:bg-primary hover:text-white dark:hover:bg-gray-700 group"
+            :class="{ 'bg-primary text-white': selectedTab == 'profile' }"
+            class="flex items-center p-2 text-base font-medium rounded-lg group"
           >
             <span class="transform transition-transform group-hover:scale-110">
-              <IconProfile class="group-hover:text-white" />
+              <IconProfile class="" />
             </span>
             <span class="ml-3">Your Profile</span>
           </a>
         </li>
 
         <Sheet class="h-full w-full">
-          <li>
+          <li @click="selectTab('notification')">
             <SheetTrigger class="flex items-center justify-center w-full">
               <a
                 href="#"
-                class="w-full flex items-center p-2 text-base font-medium text-white-900 rounded-lg dark:text-white hover:bg-primary hover:text-white dark:hover:bg-gray-700 group"
+                :class="{ 'bg-primary text-white': selectedTab == 'notification' }"
+                class="w-full flex items-center p-2 text-base font-medium text-white-900 rounded-lg dark:text-white group"
               >
                 <span class="transform transition-transform group-hover:scale-110">
-                  <IconBell class="group-hover:text-white" />
+                  <IconBell />
                 </span>
                 <span class="ml-3">Notifications</span>
                 <div
@@ -72,13 +77,14 @@
           </SheetContent>
         </Sheet>
 
-        <li>
+        <li @click="selectTab('setting')">
           <a
             href="/setting"
-            class="flex items-center p-2 text-base font-medium text-white-900 rounded-lg dark:text-white hover:bg-primary hover:text-white dark:hover:bg-gray-700 group"
+            :class="{ 'bg-primary text-white': selectedTab == 'setting' }"
+            class="flex items-center p-2 text-base font-medium rounded-lg group"
           >
             <span class="transform transition-transform group-hover:scale-110">
-              <IconSetting class="group-hover:text-white" />
+              <IconSetting class="" />
             </span>
             <span class="ml-3">Settings</span>
           </a>
@@ -87,10 +93,11 @@
         <li @click="logout">
           <a
             href="#"
-            class="flex items-center p-2 text-base font-medium text-white-900 rounded-lg dark:text-white hover:bg-primary hover:text-white dark:hover:bg-gray-700 group"
+            :class="{ 'bg-primary text-white': selectedTab == 'logout' }"
+            class="flex items-center p-2 text-base font-medium rounded-lg group"
           >
             <span class="transform transition-transform group-hover:scale-110">
-              <IconExit class="group-hover:text-white" />
+              <IconExit class="" />
             </span>
             <span class="ml-3">Logout</span>
           </a>
@@ -132,9 +139,17 @@ const store = useStore()
 
 const User = computed(() => store.state.User.user)
 
+const selectedTab = ref(localStorage.getItem('selectedTab') || 'home')
+
+const selectTab = (value) => {
+  selectedTab.value = value
+  localStorage.setItem('selectedTab', value)
+}
+
 console.log(User.value)
 
 const logout = async () => {
+  selectTab('logout')
   await store.dispatch('User/logout')
   router.push('/login')
 }
@@ -148,6 +163,10 @@ const goToProfile = (userId) => {
 
 onMounted(async () => {
   try {
+    if (!localStorage.getItem('selectedTab')) {
+      localStorage.setItem('selectedTab', 'home')
+    }
+
     const res = await axios.get(`/api/user/${User.value.user_id}/notification`)
     console.log(res)
     notifications.value = res.data.notifications

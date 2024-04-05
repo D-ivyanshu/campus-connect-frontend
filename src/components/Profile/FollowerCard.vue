@@ -3,13 +3,13 @@
     class="flex flex-col items-start sm:flex-row sm:space-y-0 sm:space-x-6 px-4 py-8 border-1 border-gray-400 dark:border-gray-400 shadow-xl rounded-lg"
   >
     <div class="rounded-full w-20">
-      <img :src="props?.follower?.data?.attributes?.avatar" class="rounded-full w-14 h-14" />
+      <img :src="props?.follower?.data?.attributes?.avatar" class="rounded-full" />
     </div>
     <div class="flex justify-between w-full md:items-center flex-col sm:space-y-2 md:flex-row">
       <div class="hover:cursor-pointer" @click="goToProfile(props?.follower?.data?.user_id)">
         <div class="flex-col">
-          <div class="text-lg font-semibold">{{ props?.follower?.data?.attributes?.name }}</div>
-          <div class="text-sm text-slate-600 mb-1">
+          <div class="text-sm font-semibold">{{ props?.follower?.data?.attributes?.name }}</div>
+          <div class="text-[12px] text-slate-600 mb-1">
             {{ props?.follower?.data?.attributes?.email }}
           </div>
           <div
@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div v-if="User.id == route.params.id">
+      <div v-if="User.user_id == route.params.id">
         <div v-if="!props?.follower?.data?.attributes?.is_followed">
           <Button
             class="mt-2 w-14 text-[12px] h-8 bg-white text-black border-[1.5px] hover:bg-gray-100 hover:border-black"
