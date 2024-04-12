@@ -46,7 +46,7 @@
         </div>
         <div v-else>
           <PostCard v-for="post in posts" :post="post" :key="post" />
-          <div v-if="!posts.length" class="text-center mt-8 text-gray-500">No posts available. 😭</div>
+          <div v-if="!posts?.length" class="text-center mt-8 text-gray-500">No posts available. 😭</div>
         </div>
       </div>
     </main>
