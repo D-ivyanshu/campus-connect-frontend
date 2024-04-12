@@ -2,22 +2,25 @@
   <div
     class="mt-5 h-full w-full bg-white rounded-xl text-gray-900 flex flex-col justify-start shadow-lg"
   >
-    <div class="relative bg-white">
+    <div v-if="apiProgress">
+      <ProfileCardSkelton />
+    </div>
+
+    <div v-else class="relative bg-white">
       <div class="rounded-t-lg h-48 overflow-hidden">
         <img
           class="object-cover object-top w-full"
-          :src="User.attributes.banner"
-          alt="Cover Photo"
+          :src="currentUser?.data?.attributes?.banner"
+          alt=""
         />
       </div>
-
       <div class="w-full mx-auto absolute left-5 top-20 flex items-center space-x-3">
         <div class="w-32 h-32 border-2 border-white rounded-full overflow-hidden">
-          <img class="rounded-full" :src="User.attributes.avatar" alt="Woman looking front" />
+          <img class="rounded-full" :src="currentUser?.data?.attributes?.avatar" alt="" />
         </div>
         <div>
           <div>
-            <h1 class="text-xl font-bold text-white">{{ User.attributes.name }}</h1>
+            <h1 class="text-xl font-bold text-white">{{ currentUser?.data?.attributes?.name }}</h1>
             <p class="text-slate-400 text-md">{{ branch }}</p>
           </div>
         </div>
@@ -46,7 +49,7 @@
     </div>
 
     <div class="bg-white h-full rounded-xl">
-      <ProfileTabs @selected="handleTabSelected" />
+      <ProfileTabs />
     </div>
   </div>
 
@@ -58,7 +61,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onBeforeMount, watch } from 'vue'
 import ProfileAbout from '@/components/Profile/ProfileAbout.vue'
 import ProfileFollowers from '@/components/Profile/ProfileFollowers.vue'
 import ProfileFriends from '@/components/Profile/ProfileFollowings.vue'
@@ -68,11 +71,13 @@ import axios from '@/api.js'
 import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import IconTick from '@/components/icons/IconTick.vue'
+import ProfileCardSkelton from '@/components/Skelton/ProfileCardSkelton.vue'
 
 const route = useRoute()
 const store = useStore()
 
 const User = computed(() => store.state.User.user)
+const currentUser = ref(null)
 const selectedTab = computed(() => store.state.SelectedTab.selectedTab)
 
 const branches = {
@@ -85,22 +90,37 @@ const branches = {
 }
 
 const branch = computed(() => {
-  const val = User.value?.attributes?.branch
+  const val = currentUser?.value?.data?.attributes?.branch
   return branches[val]
 })
 
-console.log(branch.value)
-
 const buttonText = ref(null)
+const apiProgress = ref(false)
 
-onMounted(async () => {
+const fetchData = async () => {
+  apiProgress.value = true
   try {
+    const userData = await axios.get(`/api/user/${route.params.id}`)
     const res = await axios.get(`/api/user/isfollowing/${route.params.id}`)
     buttonText.value = res.data.data
+    currentUser.value = userData.data
   } catch (error) {
     console.log(error)
+  } finally {
+    apiProgress.value = false
   }
-})
+}
+
+onBeforeMount(fetchData)
+
+watch(
+  () => route.params.id,
+  async (newId, oldId) => {
+    if (newId !== oldId) {
+      await fetchData()
+    }
+  }
+)
 
 const handleFollowActions = async (data) => {
   try {

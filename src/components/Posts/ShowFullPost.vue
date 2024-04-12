@@ -122,10 +122,10 @@
               </CarouselContent>
               <div v-if="mediaFiles?.length > 1">
                 <CarouselPrevious
-                  class="ml-12 text-gray-400 bg-gray-50 hover:text-gray-400 hover:bg-gray-100"
+                  class="ml-12 text-gray-800 bg-gray-50 hover:text-gray-900 hover:bg-gray-100"
                 />
                 <CarouselNext
-                  class="mr-12 text-gray-400 bg-gray-50 hover:text-gray-400 hover:bg-gray-100"
+                class="mr-12 text-gray-800 bg-gray-50 hover:text-gray-900 hover:bg-gray-100"
                 />
               </div>
             </Carousel>
@@ -133,7 +133,7 @@
         </div>
         <!-- Like and Comment Section -->
         <div class="flex items-center justify-between text-gray-500">
-          <div class="flex items-center hover:text-pink-500">
+          <div class="flex items-center hover:text-red-500">
             <button
               class="flex justify-center items-center gap-2 p-2 hover:bg-pink-200 hover:rounded-full"
               @click="toggleReaction()"
@@ -143,7 +143,7 @@
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 stroke-width="2"
-                :class="post?.data?.attributes.user_has_reaction ? 'fill-pink-500' : 'fill-white'"
+                :class="post?.data?.attributes.user_has_reaction ? 'fill-red-500' : 'fill-white'"
                 @click="toggleAnimation"
               >
                 <path

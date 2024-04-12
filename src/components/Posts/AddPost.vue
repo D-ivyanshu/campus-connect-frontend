@@ -63,9 +63,18 @@
       <!-- Submit Button -->
       <Button
         type="submit"
+        :disabled="apiProgress"
         class="bg-indigo-600 hover:bg-indigo-500 rounded-2xl font-semibold right-0 flex items-center"
       >
-        <div>
+        <div
+          v-if="apiProgress"
+          class="animate-spin inline-block size-4 mr-2 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
+          role="status"
+          aria-label="loading"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div v-else>
           <svg
             class="mr-1"
             viewBox="0 0 24 24"
@@ -110,6 +119,7 @@ const formSchema = toTypedSchema(
 )
 
 const imageFiles = ref()
+const apiProgress = ref(false)
 
 const { handleSubmit } = useForm({
   validationSchema: formSchema
@@ -124,9 +134,7 @@ const handleImageUpload = (event) => {
 }
 
 const onSubmit = handleSubmit(async (values) => {
-  console.log(values)
-  console.log(imageFiles.value)
-
+  apiProgress.value = true
   try {
     await store.dispatch('Post/addPost', {
       ...values,
@@ -153,6 +161,8 @@ const onSubmit = handleSubmit(async (values) => {
         variant: 'destructive'
       })
     }
+  } finally {
+    apiProgress.value = false
   }
 })
 </script>

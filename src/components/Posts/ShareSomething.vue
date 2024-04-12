@@ -14,7 +14,12 @@
               <div class="p-8 rounded-2xl w-full bg-white">
                 <div class="flex items-center justify-between mb-4 w-full">
                   <div class="flex items-center space-x-2 w-full">
-                    <img :src="User?.attributes.avatar" class="rounded-full w-10 h-10" />
+                    <div v-if="isLoading">
+                      <AvatarSkelton />
+                    </div>
+                    <div v-else>
+                      <img :src="props.avatar" class="rounded-full w-10 h-10" />
+                    </div>
                     <div class="flex-grow">
                       <input
                         class="rounded-full border-2 outline-none pl-5 p-2 w-full relative hover:bg-gray-100"
@@ -68,8 +73,8 @@ import IconGallery from '@/components/icons/IconGallery.vue'
 import IconVideo from '@/components/icons/IconVideo.vue'
 import Button from '@/components/ui/button/Button.vue'
 import AddPost from '@/components/Posts/AddPost.vue'
-import { computed } from 'vue'
-import { useStore } from 'vuex'
+import AvatarSkelton from '@/components/Skelton/AvatarSkelton.vue'
+import { ref } from 'vue'
 
 import {
   Dialog,
@@ -80,7 +85,9 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog'
 
-const store = useStore()
-
-const User = computed(() => store.state.User.user)
+const props = defineProps(['avatar'])
+const isLoading = ref(true)
+if (props.avatar) {
+  isLoading.value = false
+}
 </script>

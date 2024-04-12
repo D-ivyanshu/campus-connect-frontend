@@ -66,7 +66,17 @@
         </div>
 
         <!-- Submit Button -->
-        <Button type="submit" class="w-full rounded-2xl font-semibold"> Login </Button>
+        <Button type="submit" :disabled="apiProgress" class="w-full rounded-2xl font-semibold">
+          <div
+            v-if="apiProgress"
+            class="animate-spin inline-block size-4 mr-2 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
+            role="status"
+            aria-label="loading"
+          >
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div>Login</div>
+        </Button>
 
         <p class="text-sm text-gray-400 space-x-2 mt-2">
           Don't have an account?
@@ -94,7 +104,7 @@ import { FormControl, FormField, FormItem, FormMessage } from '@/components/ui/f
 import { Input } from '@/components/ui/input'
 import { useToast } from '@/components/ui/toast/use-toast'
 
-import { computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import router from '@/router'
 
@@ -129,15 +139,31 @@ onMounted(async () => {
   }
 })
 
+toast({
+  title: `<div class="flex space-x-2 items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-green-300">
+    <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+    </svg> 
+    <h1>Logged in successfully!</h1>
+  </div>
+`,
+  variant: 'success',
+  class: 'text-center bg-white w-full text-[10px]'
+})
+
+const apiProgress = ref(false)
+
 const onSubmit = handleSubmit(async (values) => {
+  apiProgress.value = true
   try {
     await store.dispatch('User/login', values)
 
     // TODO: correct these toasts.
     toast({
-      title: 'Logged In Successfully'
+      title: 'Logged In Successfully',
+      variant: 'success',
+      class: 'bg-green-300 text-green-900'
     })
-
     setTimeout(() => {
       router.push('/')
     }, 2000)
@@ -153,6 +179,8 @@ const onSubmit = handleSubmit(async (values) => {
         variant: 'destructive'
       })
     }
+  } finally {
+    apiProgress.value = false
   }
 })
 </script>

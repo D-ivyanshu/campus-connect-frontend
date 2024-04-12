@@ -40,7 +40,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
 <template>
   <ToastRoot
     v-bind="forwarded"
-    :class="cn(toastVariants({ variant }), props.class)"
+    :class="cn(toastVariants({ variant }), props.class, 'rounded-2xl')"
     @update:open="onOpenChange"
   >
     <slot />

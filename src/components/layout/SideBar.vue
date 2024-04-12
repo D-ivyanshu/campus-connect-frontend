@@ -8,12 +8,15 @@
       <div class="w-full h-22 flex items-start justify-center mb-6">
         <div @click="goToProfile(User?.user_id)" class="flex flex-col items-center cursor-pointer">
           <div>
-            <img :src="User?.attributes.avatar" class="rounded-full w-14 h-14" />
+            <div v-if="apiProgress">
+              <AvatarSkelton class="h-14 w-14" />
+            </div>
+            <div v-else>
+              <img :src="User?.attributes.avatar" class="rounded-full w-14 h-14" />
+            </div>
           </div>
           <div class="flex flex-col items-center">
-            <span class="text-md w-32 whitespace-normal font-semibold">{{
-              User?.attributes.name
-            }}</span>
+            <span class="text-md font-semibold">{{ User?.attributes.name }}</span>
             <span class="text-sm">{{ User?.attributes.email }}</span>
           </div>
         </div>
@@ -106,16 +109,9 @@
       <div class="mt-2 w-full h-32">
         <div class="flex flex-col items-center justify-center mt-5">
           <router-link to="/">
-            <!-- <img src="@/assets/logoo.png" alt="" class="h-40" /> -->
-            <!-- <img src="@/assets/logoo.png" alt="" /> -->
-
             <img src="@/assets/logo-campus-connect.png" alt="" class="h-14" />
             <img src="@/assets/logo with name.png" alt="" class="h-16" />
-
-            <!-- <img src="@/assets/logo-campus-connect.png" alt="" class="h-12" /> -->
           </router-link>
-          <!-- <img src="@/assets/campus connect logo.png" alt="" class="h-22 w-52" /> -->
-          <!-- <span class="text-md font-semibold">Campus Connect</span> -->
         </div>
       </div>
     </div>
@@ -134,9 +130,9 @@ import IconHome from '@/components/icons/IconHome.vue'
 import IconProfile from '@/components/icons/IconProfile.vue'
 import IconExit from '@/components/icons/IconExit.vue'
 import IconSetting from '@/components/icons/IconSetting.vue'
+import AvatarSkelton from '@/components/Skelton/AvatarSkelton.vue'
 
 const store = useStore()
-
 const User = computed(() => store.state.User.user)
 
 const selectedTab = ref(localStorage.getItem('selectedTab') || 'home')
@@ -146,8 +142,6 @@ const selectTab = (value) => {
   localStorage.setItem('selectedTab', value)
 }
 
-console.log(User.value)
-
 const logout = async () => {
   selectTab('logout')
   await store.dispatch('User/logout')
@@ -156,12 +150,14 @@ const logout = async () => {
 
 const notifications = ref(null)
 const notificationCount = ref(null)
+const apiProgress = ref(false)
 
 const goToProfile = (userId) => {
   router.push({ name: 'profile-page-id', params: { id: userId } })
 }
 
 onMounted(async () => {
+  apiProgress.value = true
   try {
     if (!localStorage.getItem('selectedTab')) {
       localStorage.setItem('selectedTab', 'home')
@@ -173,6 +169,8 @@ onMounted(async () => {
     notificationCount.value = notifications.value?.length
   } catch (error) {
     console.log(error)
+  } finally {
+    apiProgress.value = false
   }
 })
 

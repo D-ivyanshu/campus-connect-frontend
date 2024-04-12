@@ -24,7 +24,7 @@ const delegatedProps = computed(() => {
     :class="
       cn(
         // 'fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]',
-        'top-0 right-0 z-[100] flex fixed w-80 md:max-w-[420px] md:top-4 md:right-4',
+        'top-0 right-0 z-[100] flex fixed h-15 md:max-w-[420px] md:top-4 md:right-0',
         props.class
       )
     "

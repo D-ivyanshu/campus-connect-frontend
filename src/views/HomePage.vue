@@ -36,10 +36,18 @@
         </div>
 
         <!-- Add a post -->
-        <ShareSomething />
+        <ShareSomething :avatar="User?.attributes?.avatar" />
 
         <!-- Post -->
-        <PostCard v-for="post in posts" :post="post" :key="post" />
+        <div v-if="apiProgress">
+          <div v-for="index in 5" :key="index">
+            <PostSkelton />
+          </div>
+        </div>
+        <div v-else>
+          <PostCard v-for="post in posts" :post="post" :key="post" />
+          <div v-if="!posts.length" class="text-center mt-8 text-gray-500">No posts available. 😭</div>
+        </div>
       </div>
     </main>
   </div>
@@ -52,6 +60,7 @@ import SideBar from '@/components/layout/SideBar.vue'
 import RightSideBar from '@/components/layout/RightSideBar.vue'
 import PostCard from '@/components/Posts/PostCard.vue'
 import ShareSomething from '@/components/Posts/ShareSomething.vue'
+import PostSkelton from '@/components/Skelton/PostSkelton.vue'
 
 import { useStore } from 'vuex'
 
@@ -59,11 +68,17 @@ const store = useStore()
 const posts = computed(() => store.getters['Post/posts'])
 const selectedTab = ref(1)
 
+const apiProgress = ref(false)
+const User = computed(() => store.state.User.user)
+
 onMounted(async () => {
+  apiProgress.value = true
   try {
     await store.dispatch('Post/fetchPosts')
   } catch (error) {
     console.log(error)
+  } finally {
+    apiProgress.value = false
   }
 })
 </script>

@@ -50,18 +50,6 @@ import IconProfileBlock from '@/components/icons/IconProfileBlock.vue'
 import IconBell from '@/components/icons/IconBell.vue'
 import UpdateProfile from '@/components/Setting/UpdateProfile.vue'
 import NotificationSetting from '@/components/Setting/NotificationSetting.vue'
-
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
 const selectedTab = ref('profile')

@@ -267,7 +267,17 @@
         </FormItem>
       </FormField>
 
-      <Button type="submit"> Update profile </Button>
+      <Button type="submit" :disabled="apiProgress" class="rounded-2xl font-semibold">
+        <div
+          v-if="apiProgress"
+          class="animate-spin inline-block size-4 mr-2 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500"
+          role="status"
+          aria-label="loading"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div>Update profile</div>
+      </Button>
     </form>
   </div>
 </template>
@@ -344,6 +354,8 @@ const avatar = ref(
   'https://res.cloudinary.com/duwukinfy/image/upload/v1712124578/xgvsgttasxyfndx3kh4a.jpg'
 )
 
+const apiProgress = ref(false)
+
 const updateAvatar = (imageUrl) => {
   avatar.value = imageUrl
 }
@@ -352,6 +364,8 @@ const store = useStore()
 const User = computed(() => store.state.User.user)
 
 const onSubmit = async () => {
+  apiProgress.value = true
+
   try {
     handleSubmit(formData)
     const payload = { ...formData, avatar: avatar.value }
@@ -360,6 +374,8 @@ const onSubmit = async () => {
     store.commit('User/setUser', res.data.data)
   } catch (error) {
     console.log(error)
+  } finally {
+    apiProgress.value = false
   }
 }
 
