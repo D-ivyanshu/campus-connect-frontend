@@ -193,7 +193,7 @@
                 class="pl-10 border-2 py-3 w-full rounded-md text-[14px]"
               />
               <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
-                <IconFacebook />
+                <IconFacebook class="h-8 w-8"/>
               </span>
             </div>
           </FormControl>
@@ -215,7 +215,7 @@
                 class="pl-10 border-2 py-3 w-full rounded-md text-[14px]"
               />
               <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
-                <IconInstagram />
+                <IconInstagram class="h-8 w-8"/>
               </span>
             </div>
           </FormControl>
@@ -237,7 +237,7 @@
                 class="pl-10 border-2 py-3 w-full rounded-md text-[14px]"
               />
               <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
-                <IconLinkedin />
+                <IconLinkedin class="h-8 w-8"/>
               </span>
             </div>
           </FormControl>
@@ -259,7 +259,7 @@
                 class="pl-10 border-2 py-3 w-full rounded-md text-[14px]"
               />
               <span class="absolute start-0 inset-y-0 flex items-center justify-center px-2">
-                <IconTwitter />
+                <IconTwitter class="h-8 w-8"/>
               </span>
             </div>
           </FormControl>

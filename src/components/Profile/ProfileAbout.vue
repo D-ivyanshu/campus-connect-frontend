@@ -39,7 +39,7 @@
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
-                          <IconFacebook />
+                          <IconFacebook class="h-8 w-8"/>
                         </TooltipTrigger>
                         <TooltipContent class="bg-blue-100 border border-blue-300 text-blue-600">
                           <p>Facebook</p>
@@ -55,7 +55,7 @@
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
-                          <IconInstagram />
+                          <IconInstagram class="h-8 w-8 mr-3"/>
                         </TooltipTrigger>
                         <TooltipContent class="bg-pink-100 border border-pink-300 text-pink-600">
                           <p>Instagram</p>
@@ -71,7 +71,7 @@
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
-                          <IconLinkedin />
+                          <IconLinkedin class="h-8 w-8"/>
                         </TooltipTrigger>
                         <TooltipContent class="bg-blue-100 border border-blue-300 text-blue-600">
                           <p>Linkedin</p>
@@ -87,7 +87,7 @@
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger>
-                          <IconTwitter />
+                          <IconTwitter class="h-8 w-8"/>
                         </TooltipTrigger>
                         <TooltipContent class="bg-blue-100 border border-blue-300 text-blue-600">
                           <p>Twitter</p>

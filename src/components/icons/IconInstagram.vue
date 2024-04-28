@@ -4,7 +4,7 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     aria-hidden="true"
     role="img"
-    class="text-pink-600 mr-3 h-8 w-8 hover:scale-110"
+    class="text-pink-600 hover:scale-110"
     viewBox="0 0 1024 1024"
   >
     <path

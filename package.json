@@ -13,6 +13,7 @@
   "dependencies": {
     "@formkit/auto-animate": "^0.8.1",
     "@radix-icons/vue": "^1.0.0",
+    "@steveyuowo/vue-hot-toast": "^1.2.5",
     "@tiptap/extension-underline": "^2.2.4",
     "@tiptap/pm": "^2.2.4",
     "@tiptap/starter-kit": "^2.2.4",

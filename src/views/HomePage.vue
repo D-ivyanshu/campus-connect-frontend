@@ -10,7 +10,7 @@
     >
       <div>
         <div class="bg-white mb-5 flex justify-between">
-          <div class="text-xl font-semibold">Feeds</div>
+          <div class="text-2xl font-display font-semibold">Feeds</div>
           <div class="flex">
             <ul class="flex justify-between space-x-5 text-sm text-slate-700">
               <li
@@ -36,7 +36,7 @@
         </div>
 
         <!-- Add a post -->
-        <ShareSomething :avatar="User?.attributes?.avatar" />
+        <ShareSomething :avatar="User?.attributes?.avatar"/>
 
         <!-- Post -->
         <div v-if="apiProgress">
@@ -60,7 +60,7 @@ import SideBar from '@/components/layout/SideBar.vue'
 import RightSideBar from '@/components/layout/RightSideBar.vue'
 import PostCard from '@/components/Posts/PostCard.vue'
 import ShareSomething from '@/components/Posts/ShareSomething.vue'
-import PostSkelton from '@/components/Skelton/PostSkelton.vue'
+import PostSkelton from '@/components/Skelton/PostSkelton.vue' 
 
 import { useStore } from 'vuex'
 

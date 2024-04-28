@@ -5,11 +5,11 @@
         <DialogTrigger class="w-full">
           <div class="relative max-w-7xl mx-auto rounded-2xl">
             <div
-              class="absolute -inset-1 bg-gradient-to-r from-purple-600 to-pink-600 blur opacity-25 rounded-2xl"
+              class="absolute -inset-2 bg-gradient-to-r from-purple-600 to-pink-600 blur opacity-25 rounded-2xl"
             ></div>
 
             <div
-              class="relative bg-white ring-1 ring-gray-900/5 rounded-2xl leading-none flex items-top justify-start space-x-6"
+              class="relative ring-1 ring-gray-900/5 rounded-2xl leading-none flex items-top justify-start space-x-6"
             >
               <div class="p-8 rounded-2xl w-full bg-white">
                 <div class="flex items-center justify-between mb-4 w-full">

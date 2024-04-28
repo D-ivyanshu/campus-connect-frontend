@@ -9,7 +9,7 @@
         <Dialog>
           <DialogTrigger as-child>
             <div class="relative w-full max-w-sm items-center">
-              <Input id="search" type="text" placeholder="Search..." class="pl-10 bg-gray-100" />
+              <Input id="search" type="text" placeholder="Search friends" class="pl-10 bg-gray-100" />
               <span
                 class="absolute start-0 inset-y-0 flex items-center justify-center px-2 hover:scale-110"
               >
@@ -79,7 +79,7 @@
 
       <!-- Suggestions -->
       <div class="h-44 p-3">
-        <h1 class="text-lg font-semibold mb-2">Suggestions</h1>
+        <h1 class="text-lg font-display font-semibold mb-2">Suggestions</h1>
 
         <div v-if="apiProgress">
           <ul v-for="index in 3" :key="index" class="flex flex-col mb-2">
@@ -89,6 +89,7 @@
 
         <ul class="flex flex-col mb-2" v-for="user in users" :key="user">
           <li>
+            <a :href="`/profile/${user?.data?.user_id}`">
             <div class="flex justify-between items-center">
               <div class="flex items-center">
                 <div class="rounded-full h-10 w-10 mr-1">
@@ -98,21 +99,20 @@
                     alt=""
                   />
                 </div>
-                <a :href="`/profile/${user?.data?.user_id}`">
-                  <div class="text-[12px]">{{ user?.data?.attributes?.name }}</div>
-                </a>
+                <div class="text-[12px]">{{ user?.data?.attributes?.name }}</div>
               </div>
               <div class="text-sm">
                 <Button class="w-full rounded-2xl h-4 p-3 text-[10px]">follow</Button>
               </div>
             </div>
+          </a>
           </li>
         </ul>
       </div>
 
       <!-- Recommendations -->
       <div class="h-58 flex flex-col gap-2 p-3">
-        <h1 class="text-lg font-semibold">Recommendations</h1>
+        <h1 class="font-display text-lg font-semibold">Recommendations</h1>
         <div class="flex flex-col gap-2">
           <div class="flex gap-3">
             <div

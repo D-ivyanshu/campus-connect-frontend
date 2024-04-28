@@ -10,7 +10,7 @@
       @click="clearNotifications"
     >
       <IconTick class="text-green-500 mr-2" />
-      <div>Mark all as read</div>
+      <div class="font-display">Mark all as read</div>
     </button>
   </div>
 </template>

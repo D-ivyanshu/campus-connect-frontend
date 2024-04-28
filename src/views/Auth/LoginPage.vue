@@ -138,31 +138,24 @@ onMounted(async () => {
     router.push('/')
   }
 })
-
-toast({
-  title: `<div class="flex space-x-2 items-center">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-green-300">
-    <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
-    </svg> 
-    <h1>Logged in successfully!</h1>
-  </div>
-`,
-  variant: 'success',
-  class: 'text-center bg-white w-full text-[10px]'
-})
-
+ 
 const apiProgress = ref(false)
 
 const onSubmit = handleSubmit(async (values) => {
   apiProgress.value = true
   try {
     await store.dispatch('User/login', values)
-
-    // TODO: correct these toasts.
     toast({
-      title: 'Logged In Successfully',
+      title: `<div class="flex space-x-2 items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-green-300">
+        <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clip-rule="evenodd" />
+        </svg> 
+        <h1>Logged in successfully!</h1>
+      </div>
+    `,
       variant: 'success',
-      class: 'bg-green-300 text-green-900'
+      class: 'text-center bg-white w-full text-[10px]',
+      duration: 1000,
     })
     setTimeout(() => {
       router.push('/')

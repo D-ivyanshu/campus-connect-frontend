@@ -23,85 +23,87 @@
           </div>
           <div class="text-gray-500 cursor-pointer">
             <!-- Three-dot menu icon -->
-            <AlertDialog>
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <button class="hover:bg-gray-50 rounded-full p-1">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <circle cx="12" cy="7" r="1" />
-                      <circle cx="12" cy="12" r="1" />
-                      <circle cx="12" cy="17" r="1" />
-                    </svg>
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent class="left-0">
-                  <DropdownMenuItem @click="editPost">
-                    <IconEdit class="text-green-500 mr-5" />
-                    <span>Edit</span>
-                  </DropdownMenuItem>
-                  <AlertDialogTrigger class="w-full">
-                    <DropdownMenuItem>
-                      <IconDelete class="text-red-500 mr-5" />
-                      <span>Delete</span>
-                    </DropdownMenuItem>
-                  </AlertDialogTrigger>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    <div class="sm:flex sm:items-start">
-                      <div
-                        class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
+            <div v-if="post?.data.attributes.posted_by.data.user_id === User.user_id">
+              <AlertDialog>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <button class="hover:bg-gray-50 rounded-full p-1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                       >
-                        <svg
-                          class="h-7 w-7 text-red-600"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          aria-hidden="true"
+                        <circle cx="12" cy="7" r="1" />
+                        <circle cx="12" cy="12" r="1" />
+                        <circle cx="12" cy="17" r="1" />
+                      </svg>
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent class="left-0">
+                    <DropdownMenuItem @click="editPost">
+                      <IconEdit class="text-green-500 mr-5" />
+                      <span>Edit</span>
+                    </DropdownMenuItem>
+                    <AlertDialogTrigger class="w-full">
+                      <DropdownMenuItem>
+                        <IconDelete class="text-red-500 mr-5" />
+                        <span>Delete</span>
+                      </DropdownMenuItem>
+                    </AlertDialogTrigger>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      <div class="sm:flex sm:items-start">
+                        <div
+                          class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
                         >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
-                          />
-                        </svg>
-                      </div>
-                      <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">
-                          Remove Post
-                        </h3>
-                        <div class="mt-2">
-                          <p class="text-sm text-gray-500">
-                            Are you sure you want to remove your post? This action cannot be undone.
-                          </p>
+                          <svg
+                            class="h-7 w-7 text-red-600"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                            />
+                          </svg>
+                        </div>
+                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                          <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">
+                            Remove Post
+                          </h3>
+                          <div class="mt-2">
+                            <p class="text-sm text-gray-500">
+                              Are you sure you want to remove your post? This action cannot be undone.
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </AlertDialogTitle>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction
-                    @click="deletePost"
-                    class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    >Continue</AlertDialogAction
-                  >
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+                    </AlertDialogTitle>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      @click="deletePost"
+                      class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
+                      >Continue</AlertDialogAction
+                    >
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </div>
         </div>
         <!-- Message -->
@@ -112,7 +114,11 @@
         <!-- Image -->
         <div v-if="mediaFiles?.length > 0 && !edit">
           <div class="w-full flex items-center justify-center rounded-lg">
-            <Carousel class="relative w-full max-w-xl max-h-sm">
+            <Carousel 
+                :plugins="[Autoplay({
+                  delay: 4000,
+                })]" 
+            class="relative w-full max-w-xl max-h-sm">
               <CarouselContent>
                 <CarouselItem v-for="(media, index) in mediaFiles" :key="index">
                   <div class="w-full flex h-full items-center justify-center rounded-2xl">
@@ -242,6 +248,7 @@ import {
   CarouselNext,
   CarouselPrevious
 } from '@/components/ui/carousel'
+import Autoplay from 'embla-carousel-autoplay'
 
 import EditPost from '@/components/Posts/EditPost.vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
@@ -258,6 +265,7 @@ import axios from '@/api.js'
 
 const store = useStore()
 const route = useRoute()
+const User = computed(() => store.state.User.user)
 const { toast } = useToast()
 
 const commentValue = ref('')

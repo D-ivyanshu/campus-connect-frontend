@@ -31,7 +31,7 @@
             <span class="transform transition-transform group-hover:scale-110">
               <IconHome class="" />
             </span>
-            <span class="ml-3">Home</span>
+            <span class="ml-3 font-display font-semibold">Home</span>
           </a>
         </li>
 
@@ -44,7 +44,7 @@
             <span class="transform transition-transform group-hover:scale-110">
               <IconProfile class="" />
             </span>
-            <span class="ml-3">Your Profile</span>
+            <span class="ml-3 font-display font-semibold">Your Profile</span>
           </a>
         </li>
 
@@ -59,7 +59,7 @@
                 <span class="transform transition-transform group-hover:scale-110">
                   <IconBell />
                 </span>
-                <span class="ml-3">Notifications</span>
+                <span class="ml-3 font-display font-semibold">Notifications</span>
                 <div
                   v-if="notificationCount && notificationCount !== 0"
                   class="ml-8 text-[12px] rounded-lg bg-red-500 text-white w-6 h-5 flex items-center justify-center"
@@ -71,7 +71,7 @@
           </li>
           <SheetContent class="w-[400px] sm:w-[540px]">
             <SheetHeader>
-              <SheetTitle class="font-semibold text-xl">Notifications</SheetTitle>
+              <SheetTitle class="font-semibold text-xl font-display">Notifications</SheetTitle>
               <hr class="mt-3 w-full h-[1px] rounded-xl bg-gray-300" />
             </SheetHeader>
             <div class="flex flex-col items-center justify-center">
@@ -89,7 +89,7 @@
             <span class="transform transition-transform group-hover:scale-110">
               <IconSetting class="" />
             </span>
-            <span class="ml-3">Settings</span>
+            <span class="ml-3 font-display font-semibold">Settings</span>
           </a>
         </li>
 
@@ -102,7 +102,7 @@
             <span class="transform transition-transform group-hover:scale-110">
               <IconExit class="" />
             </span>
-            <span class="ml-3">Logout</span>
+            <span class="ml-3 font-display font-semibold">Logout</span>
           </a>
         </li>
       </ul>

@@ -32,6 +32,7 @@
             </div>
             <div class="text-gray-500 cursor-pointer">
               <!-- Three-dot menu icon -->
+              <div v-if="postInfo?.data?.attributes.posted_by.data.user_id === User.user_id">
               <AlertDialog>
                 <DropdownMenu>
                   <DropdownMenuTrigger>
@@ -116,6 +117,7 @@
                 </AlertDialogContent>
               </AlertDialog>
             </div>
+            </div>
           </div>
 
           <router-link :to="'/posts/' + postInfo?.data?.post_id">
@@ -132,7 +134,11 @@
           <!-- Image -->
           <div v-if="mediaFiles?.length > 0 && !edit" class="h-full">
             <div class="w-full flex items-center justify-center rounded-lg">
-              <Carousel class="relative w-full max-w-xl">
+              <Carousel 
+                :plugins="[Autoplay({
+                  delay: 5000,
+                })]"
+               class="relative w-full max-w-xl">
                 <CarouselContent>
                   <CarouselItem v-for="(media, index) in mediaFiles" :key="index">
                     <div class="w-full flex h-full items-center justify-center rounded-2xl">
@@ -180,30 +186,70 @@
               </div>
             </div>
             <!-- TODO: add same for comment thing like like one -->
-            <button
-              class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 hover:rounded-full"
-            >
-              <svg
-                width="22px"
-                height="22px"
-                viewBox="0 0 24 24"
-                class="w-5 h-5 fill-current hovered"
-                xmlns="http://www.w3.org/2000/svg"
+          
+            <div class="flex">
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    <button
+                      class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 hover:rounded-full"
+                    >
+                      <div class="flex p-2">
+                        <svg
+                          class="mr-1"
+                          viewBox="0 0 24 24"
+                          width="20px"
+                          height="20px"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <line x1="22" y1="2" x2="11" y2="13"></line>
+                          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                        <span>Share</span>
+                      </div>
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent class="left-0">
+                    <DropdownMenuItem class="focus:bg-white">
+                      <div class="flex justify-between cursor-pointer">
+                        <a href="/" @click.prevent="shareJobUrls(postInfo?.data?.attributes.body, mediaFiles)">
+                          <IconLinkedin class="h-6 w-6 mr-5" />
+                        </a>
+                        <IconTwitter class="h-6 w-6 mr-5"/>
+                        <IconInstagram class="h-6 w-6"/>
+                      </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+           
+              <button
+                class="flex justify-center items-center gap-2 px-2 hover:bg-gray-50 hover:rounded-full"
               >
-                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                <g id="SVGRepo_iconCarrier">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22ZM8 13.25C7.58579 13.25 7.25 13.5858 7.25 14C7.25 14.4142 7.58579 14.75 8 14.75H13.5C13.9142 14.75 14.25 14.4142 14.25 14C14.25 13.5858 13.9142 13.25 13.5 13.25H8ZM7.25 10.5C7.25 10.0858 7.58579 9.75 8 9.75H16C16.4142 9.75 16.75 10.0858 16.75 10.5C16.75 10.9142 16.4142 11.25 16 11.25H8C7.58579 11.25 7.25 10.9142 7.25 10.5Z"
-                  ></path>
-                </g>
-              </svg>
-              <router-link :to="'/posts/' + postInfo?.data?.post_id">
-                <span>{{ postInfo?.data?.attributes.comments.comment_count }} Comment</span>
-              </router-link>
-            </button>
+                <svg
+                  width="22px"
+                  height="22px"
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current hovered"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.5997 2.37562 15.1116 3.04346 16.4525C3.22094 16.8088 3.28001 17.2161 3.17712 17.6006L2.58151 19.8267C2.32295 20.793 3.20701 21.677 4.17335 21.4185L6.39939 20.8229C6.78393 20.72 7.19121 20.7791 7.54753 20.9565C8.88837 21.6244 10.4003 22 12 22ZM8 13.25C7.58579 13.25 7.25 13.5858 7.25 14C7.25 14.4142 7.58579 14.75 8 14.75H13.5C13.9142 14.75 14.25 14.4142 14.25 14C14.25 13.5858 13.9142 13.25 13.5 13.25H8ZM7.25 10.5C7.25 10.0858 7.58579 9.75 8 9.75H16C16.4142 9.75 16.75 10.0858 16.75 10.5C16.75 10.9142 16.4142 11.25 16 11.25H8C7.58579 11.25 7.25 10.9142 7.25 10.5Z"
+                    ></path>
+                  </g>
+                </svg>
+                <router-link :to="'/posts/' + postInfo?.data?.post_id">
+                  <span>{{ postInfo?.data?.attributes.comments.comment_count }} Comments</span>
+                </router-link>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -237,16 +283,20 @@ import {
   CarouselNext,
   CarouselPrevious
 } from '@/components/ui/carousel'
+import Autoplay from 'embla-carousel-autoplay'
+
 
 import EditPost from '@/components/Posts/EditPost.vue'
 import IconEdit from '@/components/icons/IconEdit.vue'
 import IconDelete from '@/components/icons/IconDelete.vue'
+import { IconLinkedin, IconTwitter, IconInstagram } from '@/components/icons/index.js'
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useToast } from '@/components/ui/toast/use-toast'
 import router from '@/router'
 import axios from '@/api.js'
 
+const User = computed(() => store.state.User.user)
 const store = useStore()
 const { toast } = useToast()
 
@@ -255,6 +305,27 @@ const isAnimating = ref(true)
 const edit = ref(false)
 const props = defineProps(['post'])
 postInfo.value = props.post
+
+const linkedinLink = ref('')
+
+const removeHtmlTags = (str) => {
+  if((str === null) || (str === ''))
+    return false;
+  else
+    str = str.toString();
+
+  console.log(str.replace(/(<([^>]+)>)/ig, ''));
+  return str.replace(/(<([^>]+)>)/ig, '');
+}
+
+const shareJobUrls = (body, media) => {
+  body = body.toString();
+  body = body.replace(/(<([^>]+)>)/ig, '');
+  linkedinLink.value = "https://www.linkedin.com/shareArticle?mini=true&text="+body+"&url="+media;
+  setTimeout(() => {
+      window.location.href = linkedinLink.value;
+    }, 1000);
+}
 
 const mediaFiles = computed(() => {
   if (postInfo.value?.data?.attributes?.media?.data) {
