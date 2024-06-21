@@ -11,8 +11,11 @@ This user-friendly web app simplifies how we connect and share information.
 
 ## Images for references 
 
+### Register Page
 <img width="959" alt="1  register" src="https://github.com/D-ivyanshu/campus-connect-frontend/assets/93874215/85396d96-3ac0-43a5-96d9-1da450a723e5">
+### Login Page
 <img width="959" alt="3  login" src="https://github.com/D-ivyanshu/campus-connect-frontend/assets/93874215/a727c2ee-8241-4940-b4a0-ad7845ac9189">
+### Forgot Password Page
 <img width="959" alt="4  forgot password " src="https://github.com/D-ivyanshu/campus-connect-frontend/assets/93874215/0b4efc32-cd14-427e-9353-935fc831d35a">
 <img width="959" alt="6  reset password " src="https://github.com/D-ivyanshu/campus-connect-frontend/assets/93874215/2864952d-5679-4dde-9ac6-649fd79ea144">
 <img width="959" alt="7  feed page" src="https://github.com/D-ivyanshu/campus-connect-frontend/assets/93874215/dff7d173-af79-4343-ae1a-e689180ef086">
