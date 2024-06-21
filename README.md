@@ -6,7 +6,10 @@ This user-friendly web app simplifies how we connect and share information.
 ## Problem Statement 
 
 - Sharing info in college is hard. Using old ways and many social platforms means more work to post everywhere.
-- It's slow and not effective. 
+- Traditional social media can lead to information overload, making it challenging for users to find and engage with relevant college-related content.
+- It's slow and not effective.
+
+## Solution 
 
 
 ## Images for references 
@@ -36,3 +39,29 @@ This user-friendly web app simplifies how we connect and share information.
 <img width="959" alt="17  search user page " src="https://github.com/D-ivyanshu/campus-connect-frontend/assets/93874215/18d2b920-5b48-4bf9-b3c6-f92f6cf3103c">
 
 <img width="958" alt="16  write a post" src="https://github.com/D-ivyanshu/campus-connect-frontend/assets/93874215/9db68436-a91b-4859-8140-ff70b51a3f72">
+
+## Installation
+
+- Clone the repository:
+ ``` git clone https://github.com/your-repo/campus-connect.git```
+- Navigate to the project directory:
+```cd campus-connect```
+- Install dependencies:
+```npm install```
+- Start the development server:
+```npm run dev```
+
+## Contributions
+
+We welcome contributions from the community! To contribute:
+
+- Fork the repository.
+- Create a new branch (git checkout -b feature/YourFeature).
+- Make your changes.
+- Commit your changes (git commit -m 'Add some feature').
+- Push to the branch (git push origin feature/YourFeature).
+- Open a pull request.
+
+## Support
+
+If you encounter any issues or have questions, please get in touch with `divyanshu.20224@gmail.com`
