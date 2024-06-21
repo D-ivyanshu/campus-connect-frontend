@@ -11,11 +11,11 @@ This user-friendly web app simplifies how we connect and share information.
 
 ## Solution 
 
-- Centralized Information Hub: By consolidating all announcements, event updates, and club-related content into one platform, Campus Connect eliminates the need for multiple postings across various social media platforms.  
+- `Centralized Information Hub`: By consolidating all announcements, event updates, and club-related content into one platform, Campus Connect eliminates the need for multiple postings across various social media platforms.  
 
-- Enhanced Security and Seamless Access: Campus Connect exclusively uses college email credentials for login. This eliminates the need for additional account creation steps that are common on traditional social media platforms, ensuring that only authenticated college members can access the platform.
+- `Enhanced Security and Seamless Access`: Campus Connect exclusively uses college email credentials for login. This eliminates the need for additional account creation steps that are common on traditional social media platforms, ensuring that only authenticated college members can access the platform.
 
-- Streamlined Communication: This focused approach enhances communication efficiency, ensuring that important messages are not lost in the clutter of irrelevant social media posts.
+- `Streamlined Communication`: This focused approach enhances communication efficiency, ensuring that important messages are not lost in the clutter of irrelevant social media posts.
 
 
 ## Images for references 
@@ -62,10 +62,10 @@ This user-friendly web app simplifies how we connect and share information.
 We welcome contributions from the community! To contribute:
 
 - Fork the repository.
-- Create a new branch (git checkout -b feature/YourFeature).
+- Create a new branch ```git checkout -b feature/YourFeature```
 - Make your changes.
-- Commit your changes (git commit -m 'Add some feature').
-- Push to the branch (git push origin feature/YourFeature).
+- Commit your changes ```git commit -m 'Add some feature'```
+- Push to the branch ```git push origin feature/YourFeature```
 - Open a pull request.
 
 ## Support
